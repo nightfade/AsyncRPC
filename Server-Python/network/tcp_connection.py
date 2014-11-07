@@ -15,10 +15,10 @@ class TCPConnectionDelegate(object):
         self.master = master
 
     def on_disconnected(self):
-        self.logger.debug('on_disconnected')
+        self.logger.debug('[ on_disconnected ] ' + str(self.master.getpeername()))
 
     def on_received(self, data):
-        self.logger.debug('on_received ' + data)
+        self.logger.debug('[ on_received ] ' + data)
 
 
 class TCPConnection(asyncore.dispatcher):
@@ -52,10 +52,12 @@ class TCPConnection(asyncore.dispatcher):
     def set_delegate(self, delegate):
         if delegate == self.delegate:
             return
-        if not self.delegate is None:
+        if self.delegate:
             self.delegate.set_master(None)
+
         self.delegate = delegate
-        self.delegate.set_master(self)
+        if self.delegate:
+            self.delegate.set_master(self)
 
     def is_established(self):
         return self.status == TCPConnection.ST_ESTABLISHED
@@ -80,28 +82,28 @@ class TCPConnection(asyncore.dispatcher):
         return self.peername
 
     def handle_close(self):
-        self.logger.debug('handle_close')
+        self.logger.debug('[ TCPConnection handle_close ]')
         asyncore.dispatcher.handle_close(self)
         self.disconnect()
 
     def handle_expt(self):
-        self.logger.debug('handle_expt')
+        self.logger.debug('[ TCPConnection handle_expt ]')
         asyncore.dispatcher.handle_expt(self)
         self.disconnect()
 
     def handle_error(self):
-        self.logger.debug('handle_error')
+        self.logger.debug('[ TCPConnection handle_error ]')
         asyncore.dispatcher.handle_error(self)
         self.disconnect()
 
     def handle_read(self):
-        self.logger.debug('handle_read')
+        self.logger.debug('[ TCPConnection handle_read ]')
         data = self.recv(self.recv_buffer_size)
         if data and self.delegate:
             self.delegate.on_received(data)
 
     def handle_write(self):
-        self.logger.debug('handle_write')
+        self.logger.debug('[ TCPConnection handle_write ]')
         if self.writebuff:
             size = self.send(self.writebuff)
             self.writebuff = self.writebuff[size:]
