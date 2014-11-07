@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="UIControl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rB8-hB-8GZ">
+                                <rect key="frame" x="36" y="49" width="528" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8rL-0u-QFp">
+                                <rect key="frame" x="36" y="169" width="528" height="391"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GTx-6U-2RA">
+                                <rect key="frame" x="277" y="99" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="58T-wu-l70"/>
+                                    <constraint firstAttribute="height" constant="30" id="FY7-bO-3ek"/>
+                                </constraints>
+                                <state key="normal" title="Send">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onSendPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lAl-UQ-SyC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="rB8-hB-8GZ" secondAttribute="trailing" constant="20" id="4dr-Sq-GKB"/>
+                            <constraint firstItem="rB8-hB-8GZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="8AW-6s-U31"/>
+                            <constraint firstItem="GTx-6U-2RA" firstAttribute="top" secondItem="rB8-hB-8GZ" secondAttribute="bottom" constant="20" id="H4y-jY-6Zc"/>
+                            <constraint firstItem="8rL-0u-QFp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="KPt-lV-5dw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8rL-0u-QFp" secondAttribute="trailing" constant="20" id="LL7-Wk-xdR"/>
+                            <constraint firstItem="rB8-hB-8GZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="29" id="Q19-hP-Ycr"/>
+                            <constraint firstItem="8rL-0u-QFp" firstAttribute="top" secondItem="GTx-6U-2RA" secondAttribute="bottom" constant="40" id="Rjc-F1-y2N"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8rL-0u-QFp" secondAttribute="bottom" constant="40" id="hT3-ae-oev"/>
+                            <constraint firstAttribute="centerX" secondItem="GTx-6U-2RA" secondAttribute="centerX" id="p57-ii-JdG"/>
+                        </constraints>
+                        <connections>
+                            <action selector="onBackgroundTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2GD-P5-NIq"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="inputField" destination="rB8-hB-8GZ" id="k8S-DW-O2O"/>
+                        <outlet property="tableView" destination="8rL-0u-QFp" id="FGb-Zm-dFA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="343" y="329"/>
+        </scene>
+    </scenes>
+</document>

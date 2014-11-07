@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>972E0449-584D-4AA8-AE49-BCE8FA2E871C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AsyncRPC-iOS</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>164187E38B2134B66C8442C667F449B6D488B8A2</key>
+		<string>https://github.com/nightfade/AsyncRPC.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Client-ObjC/AsyncRPC-iOS/AsyncRPC-iOS.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>164187E38B2134B66C8442C667F449B6D488B8A2</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/nightfade/AsyncRPC.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>164187E38B2134B66C8442C667F449B6D488B8A2</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>164187E38B2134B66C8442C667F449B6D488B8A2</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AsyncRPC</string>
+		</dict>
+	</array>
+</dict>
+</plist>
