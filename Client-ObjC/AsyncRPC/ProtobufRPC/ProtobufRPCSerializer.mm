@@ -20,7 +20,7 @@
     return self;
 }
 
-- (NSData *)serializeMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(uint32_t)callid {
+- (NSData *)serializeMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid {
     if (![NSJSONSerialization isValidJSONObject:params]) {
         NSLog(@"params is not a valid JSON object!");
         return nil;

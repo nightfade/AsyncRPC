@@ -56,7 +56,7 @@ std::string ProtobufCodec::encode(const google::protobuf::Message& message)
     result.resize(kHeaderLen);
     
     const std::string& typeName = message.GetTypeName();
-    int32_t nameLen = static_cast<int32_t>(typeName.size()+1);
+    int32_t nameLen = static_cast<int32_t>(typeName.size());
     int32_t be32 = htonl(nameLen);
     result.append(reinterpret_cast<char*>(&be32), sizeof be32);
     result.append(typeName.c_str(), nameLen);

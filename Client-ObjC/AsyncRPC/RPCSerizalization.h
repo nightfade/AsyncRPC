@@ -11,9 +11,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef int32_t callid_t;
+
+
 @protocol RPCDeserializerDelegate <NSObject>
 
-- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params;
+- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid;
 - (void)callbackWithId:(NSNumber *)callid andReturnValue:(NSDictionary *)retValue;
 
 @end
@@ -21,7 +24,7 @@
 
 @protocol RPCSerializer <NSObject>
 
-- (NSData *)serializeMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(uint32_t)callid;
+- (NSData *)serializeMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid;
 
 @end
 

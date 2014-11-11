@@ -151,10 +151,10 @@
 
 #pragma mark RPCService
 
-- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params {
+- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid {
     NSData *data = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
     NSString *printValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"Serve Method: %@ with Params: %@", methodName, printValue);
+    NSLog(@"Serve Method: %@ with Params: %@ andCallid: %d", methodName, printValue, callid);
 }
 
 @end

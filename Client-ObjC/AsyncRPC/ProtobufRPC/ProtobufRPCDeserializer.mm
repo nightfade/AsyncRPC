@@ -77,7 +77,10 @@ const size_t kHeaderLength = sizeof(int32_t);
     if (message->GetTypeName() == "RPCRequest")
     {
         RPCRequest *request = static_cast<RPCRequest *>(message);
+        
+        // method name
         NSString *methodName = [NSString stringWithUTF8String:request->methodname().c_str()];
+        // params json object
         NSData *jsonData = [NSData dataWithBytes:request->params().c_str() length:request->params().size()];
         NSError *error;
         id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
@@ -86,12 +89,18 @@ const size_t kHeaderLength = sizeof(int32_t);
                                            reason:@"Invalid JSON Params!"
                                          userInfo:@{@"Error": error}];
         }
-        [handler serveMethod:methodName withParams:jsonObject];
+        // call id
+        callid_t callid = request->callid();
+        
+        [handler serveMethod:methodName withParams:jsonObject andCallid:callid];
     }
     else if (message->GetTypeName() == "RPCResponse")
     {
-         RPCResponse *response = static_cast<RPCResponse *>(message);
-        int32_t callid = response->callid();
+        RPCResponse *response = static_cast<RPCResponse *>(message);
+        
+        // call id
+        callid_t callid = response->callid();
+        // return value
         std::string retvalueData = response->retvalue();
         NSData *jsonData = [NSData dataWithBytes:retvalueData.c_str() length:retvalueData.size()];
         NSError *error;
@@ -101,6 +110,7 @@ const size_t kHeaderLength = sizeof(int32_t);
                                            reason:@"Invalid JSON Params!"
                                          userInfo:@{@"Error": error}];
         }
+        
         [handler callbackWithId:[NSNumber numberWithInt:callid] andReturnValue:jsonObject];
     }
     else

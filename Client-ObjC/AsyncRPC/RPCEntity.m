@@ -33,6 +33,7 @@
     if (self = [super init]) {
         _serializer = serializer;
         _deserializer = deserializer;
+        self.callbacks = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -48,8 +49,8 @@
 }
 
 - (void)callMethod:(NSString *)methodName usingParams:(NSDictionary *)params withCallback:(RPCCallback)callback {
-    uint32_t callid = self.nextCallid++;
-    self.callbacks[[NSNumber numberWithUnsignedInt:callid]] = callback;
+    callid_t callid = self.nextCallid++;
+    self.callbacks[[NSNumber numberWithInt:callid]] = callback;
     NSData *data = [self.serializer serializeMethod:methodName withParams:params andCallid:callid];
     [self.connection writeData:data];
 }
@@ -71,8 +72,8 @@
 
 #pragma RPCDeserializerDelegate
 
-- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params {
-    [self.service serveMethod:methodName withParams:params];
+- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(int32_t)callid {
+    [self.service serveMethod:methodName withParams:params andCallid:callid];
 }
 
 

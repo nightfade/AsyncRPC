@@ -18,7 +18,7 @@ class TCPConnectionDelegate(object):
         self.logger.debug('[ on_disconnected ] ' + str(self.master.getpeername()))
 
     def on_received(self, data):
-        self.logger.debug('[ on_received ] ' + data)
+        self.logger.debug('[ on_received ] ' + repr(data))
 
 
 class TCPConnection(asyncore.dispatcher):

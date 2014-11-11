@@ -14,7 +14,7 @@
 
 @protocol RPCService <NSObject>
 
-- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params;
+- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid;
 
 @end
 
