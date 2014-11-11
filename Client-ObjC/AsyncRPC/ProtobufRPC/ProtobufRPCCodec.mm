@@ -1,13 +1,14 @@
 //
-//  ProtobufRPCDeserializer.m
+//  ProtobufRPCCodec.m
 //  AsyncRPC-iOS
 //
-//  Created by Meng on 14/11/9.
+//  Created by Meng on 14/11/11.
 //  Copyright (c) 2014年 nightfade. All rights reserved.
 //
 
-#import "ProtobufRPCDeserializer.h"
+#import "ProtobufRPCCodec.h"
 
+#import <string>
 #import <deque>
 #import <algorithm>
 #import <iterator>
@@ -15,18 +16,22 @@
 #import "RPCMessage.pb.h"
 #import "ProtobufCodec.h"
 
+
 const size_t kHeaderLength = sizeof(int32_t);
 
-@interface ProtobufRPCDeserializer () {
+
+
+@interface ProtobufRPCCodec () {
     std::deque<char> _buffer;
 }
 
-- (void)dispatchAndReleaseMessage:(google::protobuf::Message *)message withHandler:(id<RPCDeserializerDelegate>)handler;
+- (void)dispatchAndReleaseMessage:(google::protobuf::Message *)message withHandler:(id<RPCServiceDelegate>)handler;
 
 @end
 
 
-@implementation ProtobufRPCDeserializer
+
+@implementation ProtobufRPCCodec
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -35,7 +40,48 @@ const size_t kHeaderLength = sizeof(int32_t);
     return self;
 }
 
-- (void)handleData:(NSData *)data withDelegate:(id<RPCDeserializerDelegate>)delegate {
+- (NSData *)serializeMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid {
+    if (![NSJSONSerialization isValidJSONObject:params]) {
+        NSLog(@"params is not a valid JSON object!");
+        return nil;
+    }
+    NSError *jsonError;
+    NSData *paramsData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&jsonError];
+    if (paramsData == nil) {
+        NSLog(@"NSJsonSerialization Error: %@", jsonError);
+        return nil;
+    }
+    RPCRequest request;
+    request.set_methodname([methodName UTF8String]);
+    request.set_params([paramsData bytes], [paramsData length]);
+    request.set_callid(callid);
+    
+    std::string serializedData = ProtobufCodec::encode(request);
+    return [NSData dataWithBytes:serializedData.data() length:serializedData.size()];
+}
+
+
+- (NSData *)serializeCallbackID:(callid_t)callid withReturnValue:(NSDictionary *)retvalue {
+    if (![NSJSONSerialization isValidJSONObject:retvalue]) {
+        NSLog(@"retvalue is not a valid JSON object!");
+        return nil;
+    }
+    NSError *jsonError;
+    NSData *retvalueData = [NSJSONSerialization dataWithJSONObject:retvalue options:0 error:&jsonError];
+    if (retvalueData == nil) {
+        NSLog(@"NSJsonSerialization Error: %@", jsonError);
+        return nil;
+    }
+    RPCResponse response;
+    response.set_callid(callid);
+    response.set_retvalue([retvalueData bytes], [retvalueData length]);
+    
+    std::string serializedData = ProtobufCodec::encode(response);
+    return [NSData dataWithBytes:serializedData.data() length:serializedData.size()];
+}
+
+
+- (void)handleData:(NSData *)data withService:(id<RPCServiceDelegate>)delegate {
     // 1. copy input data input buffer
     const char *bytes = static_cast<const char*>(data.bytes);
     NSUInteger length = [data length];
@@ -73,7 +119,7 @@ const size_t kHeaderLength = sizeof(int32_t);
 }
 
 
-- (void)dispatchAndReleaseMessage:(google::protobuf::Message *)message withHandler:(id<RPCDeserializerDelegate>)handler {
+- (void)dispatchAndReleaseMessage:(google::protobuf::Message *)message withHandler:(id<RPCServiceDelegate>)handler {
     if (message->GetTypeName() == "RPCRequest")
     {
         RPCRequest *request = static_cast<RPCRequest *>(message);
@@ -85,7 +131,7 @@ const size_t kHeaderLength = sizeof(int32_t);
         NSError *error;
         id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
         if (nil == jsonObject) {
-            @throw [NSException exceptionWithName:INVALID_PROTOBUF_PARAMS_EXCEPTION
+            @throw [NSException exceptionWithName:PROTOBUF_INVALID_PARAMS_EXCEPTION
                                            reason:@"Invalid JSON Params!"
                                          userInfo:@{@"Error": error}];
         }
@@ -106,7 +152,7 @@ const size_t kHeaderLength = sizeof(int32_t);
         NSError *error;
         id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
         if (nil == jsonObject) {
-            @throw [NSException exceptionWithName:INVALID_PROTOBUF_PARAMS_EXCEPTION
+            @throw [NSException exceptionWithName:PROTOBUF_INVALID_PARAMS_EXCEPTION
                                            reason:@"Invalid JSON Params!"
                                          userInfo:@{@"Error": error}];
         }
@@ -117,7 +163,7 @@ const size_t kHeaderLength = sizeof(int32_t);
     {
         NSString *reason = [NSString stringWithFormat:@"*** Invalid Message Type %s!", message->GetTypeName().c_str()];
         delete message;
-        @throw [NSException exceptionWithName:INVALID_PROTOBUF_MESSAGE_TYPE_EXCEPTION
+        @throw [NSException exceptionWithName:PROTOBUF_INVALID_MESSAGE_TYPE_EXCEPTION
                                        reason:reason
                                      userInfo:nil];
     }

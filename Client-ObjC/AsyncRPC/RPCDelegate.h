@@ -14,25 +14,16 @@
 typedef int32_t callid_t;
 
 
-@protocol RPCDeserializerDelegate <NSObject>
-
+@protocol RPCServiceDelegate <NSObject>
 - (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid;
 - (void)callbackWithId:(NSNumber *)callid andReturnValue:(NSDictionary *)retValue;
-
 @end
 
 
-@protocol RPCSerializer <NSObject>
-
+@protocol RPCSerializing <NSObject>
 - (NSData *)serializeMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid;
-
-@end
-
-
-@protocol RPCDeserializer <NSObject>
-
-- (void)handleData:(NSData *)data withDelegate:(id<RPCDeserializerDelegate>)delegate;
-
+- (NSData *)serializeCallbackID:(callid_t)callid withReturnValue:(NSDictionary *)retvalue;
+- (void)handleData:(NSData *)data withService:(id<RPCServiceDelegate>)delegate;
 @end
 
 #endif

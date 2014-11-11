@@ -100,5 +100,5 @@ class PBRPCDeserializer(RPCDeserializerBase):
             if message.DESCRIPTOR.full_name == 'RPCRequest':
                 service.serve_method(message.methodName, json.loads(message.params), message.callid)
             elif message.DESCRIPTOR.full_name == 'RPCResponse':
-                service.callback(message.callid, json.loads(message.retval))
+                service.callback(message.callid, json.loads(message.retvalue))
             self.buffer = self.buffer[self.header_size + total_size:]

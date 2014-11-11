@@ -8,31 +8,27 @@
 
 #import "RPCEntity.h"
 #import "TCPConnection.h"
-#import "ProtobufRPCSerializer.h"
-#import "ProtobufRPCDeserializer.h"
+#import "ProtobufRPCCodec.h"
 
-@interface RPCEntity () <TCPConnectionDelegate, RPCDeserializerDelegate>
+@interface RPCEntity () <TCPConnectionDelegate, RPCServiceDelegate>
 
 @property (strong) TCPConnection *connection;
 @property (strong) NSMutableDictionary *callbacks;
 @property uint32_t nextCallid;
-@property (nonatomic, strong) id<RPCSerializer> serializer;
-@property (nonatomic, strong) id<RPCDeserializer> deserializer;
+@property (nonatomic, strong) id<RPCSerializing> serializer;
 
 @end
 
 @implementation RPCEntity
 
 - (instancetype)init {
-    id<RPCSerializer> serializer = [[ProtobufRPCSerializer alloc] init];
-    id<RPCDeserializer> deserializer = [[ProtobufRPCDeserializer alloc] init];
-    return [self initWithSerializer:serializer andDeserializer:deserializer];
+    id<RPCSerializing> serializer = [[ProtobufRPCCodec alloc] init];
+    return [self initWithSerializer:serializer];
 }
 
-- (instancetype)initWithSerializer:(id<RPCSerializer>)serializer andDeserializer:(id<RPCDeserializer>)deserializer {
+- (instancetype)initWithSerializer:(id<RPCSerializing>)serializer {
     if (self = [super init]) {
         _serializer = serializer;
-        _deserializer = deserializer;
         self.callbacks = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -55,6 +51,11 @@
     [self.connection writeData:data];
 }
 
+- (void)sendCallbackWithID:(callid_t)callid andReturnValue:(NSDictionary *)retvalue {
+    NSData *data = [self.serializer serializeCallbackID:callid withReturnValue:retvalue];
+    [self.connection writeData:data];
+}
+
 #pragma mark TCPConnectionDelegate
 
 - (void)connectionOpened:(TCPConnection *)conn {
@@ -67,10 +68,10 @@
 
 - (void)receiveData:(NSData *)data fromConnection:(TCPConnection *)conn {
     NSLog(@"RPCEntity receiveData from TCPConnection");
-    [self.deserializer handleData:data withDelegate:self];
+    [self.serializer handleData:data withService:self];
 }
 
-#pragma RPCDeserializerDelegate
+#pragma RPCServiceDelegate
 
 - (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(int32_t)callid {
     [self.service serveMethod:methodName withParams:params andCallid:callid];

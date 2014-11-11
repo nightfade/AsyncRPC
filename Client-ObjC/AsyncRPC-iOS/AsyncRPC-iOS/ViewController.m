@@ -8,15 +8,14 @@
 
 #import "ViewController.h"
 #import "RPCEntity.h"
-#import "RPCSerizalization.h"
-#import "ProtobufRPCSerializer.h"
-#import "ProtobufRPCDeserializer.h"
+#import "RPCDelegate.h"
+#import "ProtobufRPCCodec.h"
 
 #define SERVER_HOST @"127.0.0.1"
 #define SERVER_PORT 65432
 #define CONNECTING_TIMEOUT 5
 
-@interface ViewController () <RPCEntityDelegate, RPCService, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ViewController () <RPCEntityDelegate, RPCServiceDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) RPCEntity *rpc;
 @property (strong, nonatomic) NSMutableArray *messages;
@@ -57,8 +56,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.rpc = [[RPCEntity alloc] initWithSerializer:[[ProtobufRPCSerializer alloc] init]
-                                     andDeserializer:[[ProtobufRPCDeserializer alloc] init]];
+    self.rpc = [[RPCEntity alloc] initWithSerializer:[[ProtobufRPCCodec alloc] init]];
     self.rpc.delegate = self;
     self.rpc.service = self;
     [self.rpc connectHost:SERVER_HOST andPort:SERVER_PORT withTimeout:CONNECTING_TIMEOUT];
@@ -99,18 +97,6 @@
     self.indicator = nil;
 }
 
-
-#pragma mark Network Callback
-
-- (void)connectionOpened:(RPCEntity *)entity {
-    [self stopActivityIndicator];
-}
-
-- (void)connectionClosed:(RPCEntity *)entity {
-    [self stopActivityIndicator];
-}
-
-
 #pragma mark TextField Callback
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
@@ -149,12 +135,38 @@
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
 }
 
-#pragma mark RPCService
+#pragma mark RPCServiceDelegate
 
 - (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid {
     NSData *data = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
     NSString *printValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"Serve Method: %@ with Params: %@ andCallid: %d", methodName, printValue, callid);
+    
+    if ([methodName isEqualToString:@"sendMessage"]) {
+        [self addNewMessage:params[@"message"]];
+        [self.rpc sendCallbackWithID:callid andReturnValue:@{@"status": @"ok"}];
+    } else {
+        [self.rpc sendCallbackWithID:callid andReturnValue:@{@"status": @"unknown method"}];
+    }
 }
+
+- (void)callbackWithId:(NSNumber *)callid andReturnValue:(NSDictionary *)retValue {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:retValue options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *printValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"Callback with id: %@ and Return Value: %@", callid, printValue);
+}
+
+
+#pragma mark RPCEntityDelegate
+
+- (void)connectionOpened:(RPCEntity *)entity {
+    [self stopActivityIndicator];
+}
+
+- (void)connectionClosed:(RPCEntity *)entity {
+    [self stopActivityIndicator];
+    exit(0);
+}
+
 
 @end

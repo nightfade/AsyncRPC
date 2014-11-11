@@ -9,11 +9,10 @@
 /* Begin PBXBuildFile section */
 		5EBB6EE40FAFA22745B9EEFD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B52010E6E3066EA379932A1 /* libPods.a */; };
 		BB490F3C1A0F615600F05173 /* RPCEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = BB490F3B1A0F615600F05173 /* RPCEntity.m */; };
-		BB490F401A0F6D4000F05173 /* ProtobufRPCSerializer.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB490F3F1A0F6D4000F05173 /* ProtobufRPCSerializer.mm */; };
-		BB490F431A0F6D6900F05173 /* ProtobufRPCDeserializer.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB490F421A0F6D6900F05173 /* ProtobufRPCDeserializer.mm */; };
 		BB490F491A10345800F05173 /* RPCMessage.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = BB490F471A10345800F05173 /* RPCMessage.pb.cc */; };
 		BB490F4C1A10DD1400F05173 /* ProtobufCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB490F4A1A10DD1400F05173 /* ProtobufCodec.mm */; };
 		BB8F3C791A119FAD00A5266A /* ProtobufTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8F3C781A119FAD00A5266A /* ProtobufTests.m */; };
+		BB8F3C841A123BB200A5266A /* ProtobufRPCCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB8F3C831A123BB200A5266A /* ProtobufRPCCodec.mm */; };
 		BBCEF4061A0CB7C0008E6963 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCEF4051A0CB7C0008E6963 /* main.m */; };
 		BBCEF4091A0CB7C0008E6963 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCEF4081A0CB7C0008E6963 /* AppDelegate.m */; };
 		BBCEF40C1A0CB7C0008E6963 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCEF40B1A0CB7C0008E6963 /* ViewController.m */; };
@@ -40,16 +39,14 @@
 		A23C50084655B9C5AC2B850D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BB490F3A1A0F615600F05173 /* RPCEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPCEntity.h; path = ../AsyncRPC/RPCEntity.h; sourceTree = "<group>"; };
 		BB490F3B1A0F615600F05173 /* RPCEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RPCEntity.m; path = ../AsyncRPC/RPCEntity.m; sourceTree = "<group>"; };
-		BB490F3D1A0F6AA600F05173 /* RPCSerizalization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RPCSerizalization.h; path = ../AsyncRPC/RPCSerizalization.h; sourceTree = "<group>"; };
-		BB490F3E1A0F6D4000F05173 /* ProtobufRPCSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProtobufRPCSerializer.h; path = ../AsyncRPC/ProtobufRPC/ProtobufRPCSerializer.h; sourceTree = "<group>"; };
-		BB490F3F1A0F6D4000F05173 /* ProtobufRPCSerializer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ProtobufRPCSerializer.mm; path = ../AsyncRPC/ProtobufRPC/ProtobufRPCSerializer.mm; sourceTree = "<group>"; };
-		BB490F411A0F6D6900F05173 /* ProtobufRPCDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProtobufRPCDeserializer.h; path = ../AsyncRPC/ProtobufRPC/ProtobufRPCDeserializer.h; sourceTree = "<group>"; };
-		BB490F421A0F6D6900F05173 /* ProtobufRPCDeserializer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ProtobufRPCDeserializer.mm; path = ../AsyncRPC/ProtobufRPC/ProtobufRPCDeserializer.mm; sourceTree = "<group>"; };
+		BB490F3D1A0F6AA600F05173 /* RPCDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RPCDelegate.h; path = ../AsyncRPC/RPCDelegate.h; sourceTree = "<group>"; };
 		BB490F471A10345800F05173 /* RPCMessage.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RPCMessage.pb.cc; path = ../AsyncRPC/ProtobufRPC/Proto/RPCMessage.pb.cc; sourceTree = "<group>"; };
 		BB490F481A10345800F05173 /* RPCMessage.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RPCMessage.pb.h; path = ../AsyncRPC/ProtobufRPC/Proto/RPCMessage.pb.h; sourceTree = "<group>"; };
 		BB490F4A1A10DD1400F05173 /* ProtobufCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ProtobufCodec.mm; path = ../AsyncRPC/ProtobufRPC/ProtobufCodec.mm; sourceTree = "<group>"; };
 		BB490F4F1A10E31600F05173 /* ProtobufCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProtobufCodec.h; path = ../AsyncRPC/ProtobufRPC/ProtobufCodec.h; sourceTree = "<group>"; };
 		BB8F3C781A119FAD00A5266A /* ProtobufTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtobufTests.m; sourceTree = "<group>"; };
+		BB8F3C821A123BB200A5266A /* ProtobufRPCCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProtobufRPCCodec.h; path = ../AsyncRPC/ProtobufRPC/ProtobufRPCCodec.h; sourceTree = "<group>"; };
+		BB8F3C831A123BB200A5266A /* ProtobufRPCCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ProtobufRPCCodec.mm; path = ../AsyncRPC/ProtobufRPC/ProtobufRPCCodec.mm; sourceTree = "<group>"; };
 		BBCEF4001A0CB7C0008E6963 /* AsyncRPC-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AsyncRPC-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBCEF4041A0CB7C0008E6963 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBCEF4051A0CB7C0008E6963 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -98,12 +95,10 @@
 			isa = PBXGroup;
 			children = (
 				BB490F451A0FBB7900F05173 /* Proto */,
-				BB490F3E1A0F6D4000F05173 /* ProtobufRPCSerializer.h */,
-				BB490F3F1A0F6D4000F05173 /* ProtobufRPCSerializer.mm */,
-				BB490F411A0F6D6900F05173 /* ProtobufRPCDeserializer.h */,
-				BB490F421A0F6D6900F05173 /* ProtobufRPCDeserializer.mm */,
 				BB490F4A1A10DD1400F05173 /* ProtobufCodec.mm */,
 				BB490F4F1A10E31600F05173 /* ProtobufCodec.h */,
+				BB8F3C821A123BB200A5266A /* ProtobufRPCCodec.h */,
+				BB8F3C831A123BB200A5266A /* ProtobufRPCCodec.mm */,
 			);
 			name = ProtobufRPC;
 			sourceTree = "<group>";
@@ -188,7 +183,7 @@
 				BBCEF42E1A0D0BCD008E6963 /* TCPConnection.m */,
 				BB490F3A1A0F615600F05173 /* RPCEntity.h */,
 				BB490F3B1A0F615600F05173 /* RPCEntity.m */,
-				BB490F3D1A0F6AA600F05173 /* RPCSerizalization.h */,
+				BB490F3D1A0F6AA600F05173 /* RPCDelegate.h */,
 			);
 			name = AsyncRPC;
 			sourceTree = "<group>";
@@ -339,9 +334,8 @@
 			files = (
 				BBCEF40C1A0CB7C0008E6963 /* ViewController.m in Sources */,
 				BBCEF42F1A0D0BCD008E6963 /* TCPConnection.m in Sources */,
-				BB490F401A0F6D4000F05173 /* ProtobufRPCSerializer.mm in Sources */,
+				BB8F3C841A123BB200A5266A /* ProtobufRPCCodec.mm in Sources */,
 				BB490F3C1A0F615600F05173 /* RPCEntity.m in Sources */,
-				BB490F431A0F6D6900F05173 /* ProtobufRPCDeserializer.mm in Sources */,
 				BBCEF4091A0CB7C0008E6963 /* AppDelegate.m in Sources */,
 				BB490F4C1A10DD1400F05173 /* ProtobufCodec.mm in Sources */,
 				BB490F491A10345800F05173 /* RPCMessage.pb.cc in Sources */,

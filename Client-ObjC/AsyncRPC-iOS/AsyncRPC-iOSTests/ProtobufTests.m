@@ -8,17 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "ProtobufRPCSerializer.h"
-#import "ProtobufRPCDeserializer.h"
+#import "ProtobufRPCCodec.h"
 
 
-@interface RPCHandler : NSObject <RPCDeserializerDelegate>
+@interface RPCHandler : NSObject <RPCServiceDelegate>
 
 @end
 
 @implementation RPCHandler
 
-- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params {
+- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid {
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
     NSLog(@"Method called: %@ with Params %@", methodName, [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
 }
@@ -60,8 +59,7 @@
 }
 
 - (void)testSerialization {
-    ProtobufRPCSerializer *serializer = [[ProtobufRPCSerializer alloc] init];
-    ProtobufRPCDeserializer *deserializer = [[ProtobufRPCDeserializer alloc] init];
+    ProtobufRPCCodec *serializer = [[ProtobufRPCCodec alloc] init];
     
     RPCHandler *handler = [[RPCHandler alloc] init];
     
@@ -71,7 +69,7 @@
    
     data = [serializer serializeMethod:@"testMethod2" withParams:@{@"param2": @2} andCallid:234];
     [buffer appendData:data];
-    [deserializer handleData:buffer withDelegate:handler];
+    [serializer handleData:buffer withService:handler];
 }
 
 @end

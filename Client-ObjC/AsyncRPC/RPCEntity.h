@@ -7,17 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RPCSerizalization.h"
+#import "RPCDelegate.h"
 
 @class RPCEntity;
-
-
-@protocol RPCService <NSObject>
-
-- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid;
-
-@end
-
 
 @protocol RPCEntityDelegate <NSObject>
 
@@ -32,13 +24,14 @@ typedef void(^RPCCallback)(NSDictionary *retValue);
 
 @interface RPCEntity : NSObject
 
-- (instancetype)initWithSerializer:(id<RPCSerializer>)serializer andDeserializer:(id<RPCDeserializer>)deserializer;
+- (instancetype)initWithSerializer:(id<RPCSerializing>)serializer;
 
-@property (weak, nonatomic) id<RPCService> service;
+@property (weak, nonatomic) id<RPCServiceDelegate> service;
 @property (weak, nonatomic) id<RPCEntityDelegate> delegate;
 
 - (void)connectHost:(NSString *)host andPort:(uint16_t)port withTimeout:(NSTimeInterval)timeout;
 - (void)disconnectAfterFinished:(BOOL)finished;
 - (void)callMethod:(NSString *)methodName usingParams:(NSDictionary *)params withCallback:(RPCCallback)callback;
+- (void)sendCallbackWithID:(callid_t)callid andReturnValue:(NSDictionary *)retvalue;
 
 @end
