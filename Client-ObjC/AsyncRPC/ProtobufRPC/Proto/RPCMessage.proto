@@ -1,0 +1,12 @@
+
+message RPCRequest {
+    required int32 callid = 1;
+    required string methodName = 2;
+    required bytes params = 3;
+}
+
+
+message RPCResponse {
+    required int32 callid = 1;
+    required bytes retvalue = 2;
+}

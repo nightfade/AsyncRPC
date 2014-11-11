@@ -7,15 +7,18 @@
 //
 
 #import "ViewController.h"
-#import <GCDAsyncSocket.h>
+#import "RPCEntity.h"
+#import "RPCSerizalization.h"
+#import "ProtobufRPCSerializer.h"
+#import "ProtobufRPCDeserializer.h"
 
 #define SERVER_HOST @"127.0.0.1"
 #define SERVER_PORT 65432
 #define CONNECTING_TIMEOUT 5
 
-@interface ViewController () <GCDAsyncSocketDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ViewController () <RPCEntityDelegate, RPCService, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) GCDAsyncSocket *socket;
+@property (strong, nonatomic) RPCEntity *rpc;
 @property (strong, nonatomic) NSMutableArray *messages;
 
 @property (weak, nonatomic) IBOutlet UITextField *inputField;
@@ -23,10 +26,6 @@
 
 - (IBAction)onBackgroundTapped:(UIControl *)sender;
 - (IBAction)onSendPressed:(UIButton *)sender;
-
-- (void)connectToHost:(NSString *)host andPort:(uint16_t)port withTimeout:(NSTimeInterval)timeout;
-- (void)writeData:(NSData *)data;
-- (void)tryRead;
 
 - (void)addNewMessage:(NSString *)message;
 
@@ -58,12 +57,16 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self connectToHost:SERVER_HOST andPort:SERVER_PORT withTimeout:CONNECTING_TIMEOUT];
-    [self tryRead];
+    self.rpc = [[RPCEntity alloc] initWithSerializer:[[ProtobufRPCSerializer alloc] init]
+                                     andDeserializer:[[ProtobufRPCDeserializer alloc] init]];
+    self.rpc.delegate = self;
+    self.rpc.service = self;
+    [self.rpc connectHost:SERVER_HOST andPort:SERVER_PORT withTimeout:CONNECTING_TIMEOUT];
+    [self startActivityIndicator];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [self.socket disconnectAfterReadingAndWriting];
+    [self.rpc disconnectAfterFinished:NO];
 }
 
 
@@ -72,7 +75,12 @@
 }
 
 - (IBAction)onSendPressed:(UIButton *)sender {
-    [self writeData:[self.inputField.text dataUsingEncoding:NSUTF8StringEncoding]];
+    [self.rpc callMethod:@"sendMessage" usingParams:@{@"message": self.inputField.text}
+            withCallback:^(NSDictionary *retvalue) {
+                NSData *jsonData = [NSJSONSerialization dataWithJSONObject:retvalue options:NSJSONWritingPrettyPrinted error:nil];
+                NSString *printValue = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                NSLog(@"Method Called With Return Value: %@", printValue);
+            }];
     [self.inputField resignFirstResponder];
     self.inputField.text = @"";
 }
@@ -91,42 +99,15 @@
     self.indicator = nil;
 }
 
-#pragma mark Network Operation
-
-- (void)connectToHost:(NSString *)host andPort:(uint16_t)port withTimeout:(NSTimeInterval)timeout{
-    [self startActivityIndicator];
-    self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-    NSError *err = nil;
-    if (![self.socket connectToHost:host onPort:port withTimeout:timeout error:&err]) {
-        NSLog(@"Invalid socket setting!");
-        exit(-1);
-    }   
-}
-
-- (void)writeData:(NSData *)data {
-    [self.socket writeData:data withTimeout:-1 tag:1];
-}
-
-- (void)tryRead {
-    [self.socket readDataWithTimeout:-1 tag:0];
-}
 
 #pragma mark Network Callback
 
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    NSLog(@"socket did connect to host %@ %d", host, port);
+- (void)connectionOpened:(RPCEntity *)entity {
     [self stopActivityIndicator];
 }
 
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
-    NSLog(@"socket did disconnect with error: %@", err);
-}
-
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag {
-    NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"socket did read data: %@", message);
-    [self addNewMessage:message];
-    [self tryRead];
+- (void)connectionClosed:(RPCEntity *)entity {
+    [self stopActivityIndicator];
 }
 
 
@@ -166,6 +147,14 @@
     NSInteger lastRow = [self.messages count] - 1;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:lastRow inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+}
+
+#pragma mark RPCService
+
+- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *printValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"Serve Method: %@ with Params: %@", methodName, printValue);
 }
 
 @end

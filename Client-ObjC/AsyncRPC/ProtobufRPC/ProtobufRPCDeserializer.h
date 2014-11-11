@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "RPCSerizalization.h"
 
+#define PROTOBUF_DECODE_EXCEPTION @"ProtobufDecodeException"
+#define INVALID_PROTOBUF_MESSAGE_TYPE_EXCEPTION @"InvalidProtobufMessageTypeException"
+#define INVALID_PROTOBUF_PARAMS_EXCEPTION @"InvalidProtobufParamsException"
+
 @interface ProtobufRPCDeserializer : NSObject <RPCDeserializer>
 
 @end

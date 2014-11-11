@@ -1,6 +1,6 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CocoaAsyncSocket"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/CocoaAsyncSocket"
-OTHER_LDFLAGS = -ObjC -l"Pods-CocoaAsyncSocket" -framework "CFNetwork" -framework "Security"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CocoaAsyncSocket" "${PODS_ROOT}/Headers/Public/GoogleProtobuf" "${PODS_ROOT}/Headers/Public/GoogleProtobuf/google/protobuf" "${PODS_ROOT}/Headers/Public/GoogleProtobuf/google/protobuf/io" "${PODS_ROOT}/Headers/Public/GoogleProtobuf/google/protobuf/stubs" "${PODS_ROOT}/Headers/Public/GoogleProtobuf/google/protobuf/testing"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/CocoaAsyncSocket" -isystem "${PODS_ROOT}/Headers/Public/GoogleProtobuf" -isystem "${PODS_ROOT}/Headers/Public/GoogleProtobuf/google/protobuf" -isystem "${PODS_ROOT}/Headers/Public/GoogleProtobuf/google/protobuf/io" -isystem "${PODS_ROOT}/Headers/Public/GoogleProtobuf/google/protobuf/stubs" -isystem "${PODS_ROOT}/Headers/Public/GoogleProtobuf/google/protobuf/testing"
+OTHER_LDFLAGS = -ObjC -l"Pods-CocoaAsyncSocket" -l"Pods-GoogleProtobuf" -framework "CFNetwork" -framework "Security"
 OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
 PODS_ROOT = ${SRCROOT}/Pods

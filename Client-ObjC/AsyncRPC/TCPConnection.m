@@ -35,6 +35,7 @@
 }
 
 - (BOOL)connectToHost:(NSString *)host andPort:(uint16_t)port withTimeout:(NSTimeInterval)timeout {
+    NSLog(@"TCPConnection connectToHost:%@ andPort:%d", host, port);
     NSError *err;
     if (![self.socket connectToHost:host onPort:port withTimeout:timeout error:&err]) {
         NSLog(@"Socket Connect Error: %@", err);
@@ -69,6 +70,7 @@
  * The host parameter will be an IP address, not a DNS name.
  **/
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
+    [self tryRead];
     [self.delegate connectionOpened:self];
 }
 

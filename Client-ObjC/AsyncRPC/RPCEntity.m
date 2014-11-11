@@ -38,6 +38,8 @@
 }
 
 - (void)connectHost:(NSString *)host andPort:(uint16_t)port withTimeout:(NSTimeInterval)timeout {
+    self.connection = [[TCPConnection alloc] init];
+    self.connection.delegate = self;
     [self.connection connectToHost:host andPort:port withTimeout:timeout];
 }
 
@@ -55,14 +57,15 @@
 #pragma mark TCPConnectionDelegate
 
 - (void)connectionOpened:(TCPConnection *)conn {
-    
+    [self.delegate connectionOpened:self];
 }
 
 - (void)connectionClosed:(TCPConnection *)conn {
-    
+    [self.delegate connectionClosed:self];
 }
 
 - (void)receiveData:(NSData *)data fromConnection:(TCPConnection *)conn {
+    NSLog(@"RPCEntity receiveData from TCPConnection");
     [self.deserializer handleData:data withDelegate:self];
 }
 
