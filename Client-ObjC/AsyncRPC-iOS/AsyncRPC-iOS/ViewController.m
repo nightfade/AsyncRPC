@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "RPCEntity.h"
-#import "RPCDelegate.h"
 #import "ProtobufRPCCodec.h"
 
 #define SERVER_HOST @"127.0.0.1"
@@ -56,7 +55,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.rpc = [[RPCEntity alloc] initWithSerializer:[[ProtobufRPCCodec alloc] init]];
+    self.rpc = [[RPCEntity alloc] initWithCodec:[[ProtobufRPCCodec alloc] init]];
     self.rpc.delegate = self;
     self.rpc.service = self;
     [self.rpc connectHost:SERVER_HOST andPort:SERVER_PORT withTimeout:CONNECTING_TIMEOUT];
@@ -137,25 +136,23 @@
 
 #pragma mark RPCServiceDelegate
 
-- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid {
-    NSData *data = [NSJSONSerialization dataWithJSONObject:params options:NSJSONWritingPrettyPrinted error:nil];
+- (RPCResponse *)handleRequest:(RPCRequest *)request {
+    NSData *data = [NSJSONSerialization dataWithJSONObject:request.params options:NSJSONWritingPrettyPrinted error:nil];
     NSString *printValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"Serve Method: %@ with Params: %@ andCallid: %d", methodName, printValue, callid);
+    NSLog(@"Serve Method: %@ with Params: %@ andCallid: %d", request.methodName, printValue, request.callid);
     
-    if ([methodName isEqualToString:@"sendMessage"]) {
-        [self addNewMessage:params[@"message"]];
-        [self.rpc sendCallbackWithID:callid andReturnValue:@{@"status": @"ok"}];
+    RPCResponse *response = [[RPCResponse alloc] init];
+    
+    if ([request.methodName isEqualToString:@"sendMessage"]) {
+        [self addNewMessage:request.params[@"message"]];
+        response.callid = request.callid;
+        response.returnValue = @{@"status": @"ok"};
     } else {
-        [self.rpc sendCallbackWithID:callid andReturnValue:@{@"status": @"unknown method"}];
+        response.callid = request.callid;
+        response.returnValue = @{@"status": @"unknown method"};
     }
+    return response;
 }
-
-- (void)callbackWithId:(NSNumber *)callid andReturnValue:(NSDictionary *)retValue {
-    NSData *data = [NSJSONSerialization dataWithJSONObject:retValue options:NSJSONWritingPrettyPrinted error:nil];
-    NSString *printValue = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"Callback with id: %@ and Return Value: %@", callid, printValue);
-}
-
 
 #pragma mark RPCEntityDelegate
 

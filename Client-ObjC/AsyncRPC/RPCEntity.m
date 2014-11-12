@@ -9,27 +9,30 @@
 #import "RPCEntity.h"
 #import "TCPConnection.h"
 #import "ProtobufRPCCodec.h"
+#import "RPCCodec.h"
 
-@interface RPCEntity () <TCPConnectionDelegate, RPCServiceDelegate>
+@interface RPCEntity () <TCPConnectionDelegate, RPCCodecDelegate>
 
 @property (strong) TCPConnection *connection;
-@property (strong) NSMutableDictionary *callbacks;
-@property uint32_t nextCallid;
-@property (nonatomic, strong) id<RPCSerializing> serializer;
+@property (strong) NSMutableDictionary *callbackTable;
+@property callid_t nextCallid;
+@property (nonatomic, strong) RPCCodec* codec;
 
 @end
+
 
 @implementation RPCEntity
 
 - (instancetype)init {
-    id<RPCSerializing> serializer = [[ProtobufRPCCodec alloc] init];
-    return [self initWithSerializer:serializer];
+    RPCCodec* codec = [[ProtobufRPCCodec alloc] init];
+    return [self initWithCodec:codec];
 }
 
-- (instancetype)initWithSerializer:(id<RPCSerializing>)serializer {
+- (instancetype)initWithCodec:(RPCCodec *)codec {
     if (self = [super init]) {
-        _serializer = serializer;
-        self.callbacks = [[NSMutableDictionary alloc] init];
+        _codec = codec;
+        _codec.delegate = self;
+        self.callbackTable = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -44,18 +47,6 @@
     [self.connection disconnectAfterFinished:finished];
 }
 
-- (void)callMethod:(NSString *)methodName usingParams:(NSDictionary *)params withCallback:(RPCCallback)callback {
-    callid_t callid = self.nextCallid++;
-    self.callbacks[[NSNumber numberWithInt:callid]] = callback;
-    NSData *data = [self.serializer serializeMethod:methodName withParams:params andCallid:callid];
-    [self.connection writeData:data];
-}
-
-- (void)sendCallbackWithID:(callid_t)callid andReturnValue:(NSDictionary *)retvalue {
-    NSData *data = [self.serializer serializeCallbackID:callid withReturnValue:retvalue];
-    [self.connection writeData:data];
-}
-
 #pragma mark TCPConnectionDelegate
 
 - (void)connectionOpened:(TCPConnection *)conn {
@@ -68,24 +59,49 @@
 
 - (void)receiveData:(NSData *)data fromConnection:(TCPConnection *)conn {
     NSLog(@"RPCEntity receiveData from TCPConnection");
-    [self.serializer handleData:data withService:self];
-}
-
-#pragma RPCServiceDelegate
-
-- (void)serveMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(int32_t)callid {
-    [self.service serveMethod:methodName withParams:params andCallid:callid];
+    [self.codec appendData:data];
 }
 
 
-- (void)callbackWithId:(NSNumber *)callid andReturnValue:(NSDictionary *)retValue {
-    RPCCallback callback = self.callbacks[callid];
+#pragma mark call RPC method
+
+- (void)callMethod:(NSString *)methodName usingParams:(NSDictionary *)params withCallback:(RPCCallback)callback {
+    callid_t callid = self.nextCallid++;
+    self.callbackTable[[NSNumber numberWithInt:callid]] = callback;
+    
+    RPCRequest *request = [self.codec createRequest];
+    request.methodName = methodName;
+    request.params = params;
+    request.callid = callid;
+    NSData *data = [request serialize];
+    [self.connection writeData:data];
+}
+
+- (void)sendCallbackWithID:(callid_t)callid andReturnValue:(NSDictionary *)retvalue {
+    RPCResponse *response = [self.codec createResponse];
+    response.callid = callid;
+    response.returnValue = retvalue;
+    NSData *data = [response serialize];
+    [self.connection writeData:data];
+}
+
+#pragma mark RPCParserDelegate
+
+- (void)handleRPCRequest:(RPCRequest *)request {
+    RPCResponse *response = [self.service handleRequest:request];
+    [self sendCallbackWithID:response.callid andReturnValue:response.returnValue];
+}
+
+- (void)handleRPCResponse:(RPCResponse *)response {
+    NSNumber *callidObj =[NSNumber numberWithInteger:response.callid];
+    RPCCallback callback = self.callbackTable[callidObj];
     if (callback) {
-        callback(retValue);
-        [self.callbacks removeObjectForKey:callid];
+        callback(response.returnValue);
+        [self.callbackTable removeObjectForKey:callidObj];
     } else {
-        NSLog(@"Invalid RPC Callback ID: %@!", callid);
+        NSLog(@"Invalid RPC Callback ID: %@", callidObj);
     }
+    
 }
 
 @end

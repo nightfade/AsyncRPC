@@ -5,7 +5,7 @@ import struct
 
 from rpc.entity import RPCSerializerBase, RPCDeserializerBase
 from proto import RPCMessage_pb2
-from proto.RPCMessage_pb2 import RPCRequest, RPCResponse
+from proto.RPCMessage_pb2 import RPCRequest_pb2, RPCResponse_pb2
 from utility import logger_manager
 
 from google.protobuf import descriptor_pool, descriptor_database, message_factory, descriptor_pb2
@@ -24,8 +24,8 @@ class ProtobufCodec(object):
     logger = logger_manager.get_logger('ProtobufCodec')
 
     message_types = {
-        'RPCRequest': RPCRequest,
-        'RPCResponse': RPCResponse
+        'RPCRequest_pb2': RPCRequest_pb2,
+        'RPCResponse_pb2': RPCResponse_pb2
     }
 
     @staticmethod
@@ -66,14 +66,14 @@ class ProtobufCodec(object):
 class PBRPCSerializer(RPCSerializerBase):
 
     def serialize_request(self, method_name, params, callid):
-        request = RPCRequest()
+        request = RPCRequest_pb2()
         request.methodName = method_name
         request.params = json.dumps(params)
         request.callid = callid
         return ProtobufCodec.encode_message(request)
 
     def serialize_response(self, callid, retvalue):
-        response = RPCResponse()
+        response = RPCResponse_pb2()
         response.callid = callid
         response.retvalue = json.dumps(retvalue)
         return ProtobufCodec.encode_message(response)
@@ -97,8 +97,8 @@ class PBRPCDeserializer(RPCDeserializerBase):
             if len(self.buffer) < self.header_size + total_size:
                 break
             message = ProtobufCodec.decode_message(self.buffer[self.header_size:self.header_size + total_size])
-            if message.DESCRIPTOR.full_name == 'RPCRequest':
+            if message.DESCRIPTOR.full_name == 'RPCRequest_pb2':
                 service.serve_method(message.methodName, json.loads(message.params), message.callid)
-            elif message.DESCRIPTOR.full_name == 'RPCResponse':
+            elif message.DESCRIPTOR.full_name == 'RPCResponse_pb2':
                 service.callback(message.callid, json.loads(message.retvalue))
             self.buffer = self.buffer[self.header_size + total_size:]

@@ -18,12 +18,12 @@
 
 namespace {
 
-const ::google::protobuf::Descriptor* RPCRequest_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* RPCRequest_pb2_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  RPCRequest_reflection_ = NULL;
-const ::google::protobuf::Descriptor* RPCResponse_descriptor_ = NULL;
+  RPCRequest_pb2_reflection_ = NULL;
+const ::google::protobuf::Descriptor* RPCResponse_pb2_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  RPCResponse_reflection_ = NULL;
+  RPCResponse_pb2_reflection_ = NULL;
 
 }  // namespace
 
@@ -34,39 +34,39 @@ void protobuf_AssignDesc_RPCMessage_2eproto() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "RPCMessage.proto");
   GOOGLE_CHECK(file != NULL);
-  RPCRequest_descriptor_ = file->message_type(0);
-  static const int RPCRequest_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest, callid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest, methodname_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest, params_),
+  RPCRequest_pb2_descriptor_ = file->message_type(0);
+  static const int RPCRequest_pb2_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest_pb2, callid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest_pb2, methodname_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest_pb2, params_),
   };
-  RPCRequest_reflection_ =
+  RPCRequest_pb2_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      RPCRequest_descriptor_,
-      RPCRequest::default_instance_,
-      RPCRequest_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest, _unknown_fields_),
+      RPCRequest_pb2_descriptor_,
+      RPCRequest_pb2::default_instance_,
+      RPCRequest_pb2_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest_pb2, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCRequest_pb2, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(RPCRequest));
-  RPCResponse_descriptor_ = file->message_type(1);
-  static const int RPCResponse_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCResponse, callid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCResponse, retvalue_),
+      sizeof(RPCRequest_pb2));
+  RPCResponse_pb2_descriptor_ = file->message_type(1);
+  static const int RPCResponse_pb2_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCResponse_pb2, callid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCResponse_pb2, retvalue_),
   };
-  RPCResponse_reflection_ =
+  RPCResponse_pb2_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      RPCResponse_descriptor_,
-      RPCResponse::default_instance_,
-      RPCResponse_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCResponse, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCResponse, _unknown_fields_),
+      RPCResponse_pb2_descriptor_,
+      RPCResponse_pb2::default_instance_,
+      RPCResponse_pb2_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCResponse_pb2, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RPCResponse_pb2, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(RPCResponse));
+      sizeof(RPCResponse_pb2));
 }
 
 namespace {
@@ -80,18 +80,18 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    RPCRequest_descriptor_, &RPCRequest::default_instance());
+    RPCRequest_pb2_descriptor_, &RPCRequest_pb2::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    RPCResponse_descriptor_, &RPCResponse::default_instance());
+    RPCResponse_pb2_descriptor_, &RPCResponse_pb2::default_instance());
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_RPCMessage_2eproto() {
-  delete RPCRequest::default_instance_;
-  delete RPCRequest_reflection_;
-  delete RPCResponse::default_instance_;
-  delete RPCResponse_reflection_;
+  delete RPCRequest_pb2::default_instance_;
+  delete RPCRequest_pb2_reflection_;
+  delete RPCResponse_pb2::default_instance_;
+  delete RPCResponse_pb2_reflection_;
 }
 
 void protobuf_AddDesc_RPCMessage_2eproto() {
@@ -101,16 +101,16 @@ void protobuf_AddDesc_RPCMessage_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\020RPCMessage.proto\"@\n\nRPCRequest\022\016\n\006call"
-    "id\030\001 \002(\005\022\022\n\nmethodName\030\002 \002(\t\022\016\n\006params\030\003"
-    " \002(\014\"/\n\013RPCResponse\022\016\n\006callid\030\001 \002(\005\022\020\n\010r"
-    "etvalue\030\002 \002(\014", 133);
+    "\n\020RPCMessage.proto\"D\n\016RPCRequest_pb2\022\016\n\006"
+    "callid\030\001 \002(\005\022\022\n\nmethodName\030\002 \002(\t\022\016\n\006para"
+    "ms\030\003 \002(\014\"3\n\017RPCResponse_pb2\022\016\n\006callid\030\001 "
+    "\002(\005\022\020\n\010retvalue\030\002 \002(\014", 141);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RPCMessage.proto", &protobuf_RegisterTypes);
-  RPCRequest::default_instance_ = new RPCRequest();
-  RPCResponse::default_instance_ = new RPCResponse();
-  RPCRequest::default_instance_->InitAsDefaultInstance();
-  RPCResponse::default_instance_->InitAsDefaultInstance();
+  RPCRequest_pb2::default_instance_ = new RPCRequest_pb2();
+  RPCResponse_pb2::default_instance_ = new RPCResponse_pb2();
+  RPCRequest_pb2::default_instance_->InitAsDefaultInstance();
+  RPCResponse_pb2::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_RPCMessage_2eproto);
 }
 
@@ -124,26 +124,26 @@ struct StaticDescriptorInitializer_RPCMessage_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RPCRequest::kCallidFieldNumber;
-const int RPCRequest::kMethodNameFieldNumber;
-const int RPCRequest::kParamsFieldNumber;
+const int RPCRequest_pb2::kCallidFieldNumber;
+const int RPCRequest_pb2::kMethodNameFieldNumber;
+const int RPCRequest_pb2::kParamsFieldNumber;
 #endif  // !_MSC_VER
 
-RPCRequest::RPCRequest()
+RPCRequest_pb2::RPCRequest_pb2()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void RPCRequest::InitAsDefaultInstance() {
+void RPCRequest_pb2::InitAsDefaultInstance() {
 }
 
-RPCRequest::RPCRequest(const RPCRequest& from)
+RPCRequest_pb2::RPCRequest_pb2(const RPCRequest_pb2& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void RPCRequest::SharedCtor() {
+void RPCRequest_pb2::SharedCtor() {
   _cached_size_ = 0;
   callid_ = 0;
   methodname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
@@ -151,11 +151,11 @@ void RPCRequest::SharedCtor() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-RPCRequest::~RPCRequest() {
+RPCRequest_pb2::~RPCRequest_pb2() {
   SharedDtor();
 }
 
-void RPCRequest::SharedDtor() {
+void RPCRequest_pb2::SharedDtor() {
   if (methodname_ != &::google::protobuf::internal::kEmptyString) {
     delete methodname_;
   }
@@ -166,28 +166,28 @@ void RPCRequest::SharedDtor() {
   }
 }
 
-void RPCRequest::SetCachedSize(int size) const {
+void RPCRequest_pb2::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* RPCRequest::descriptor() {
+const ::google::protobuf::Descriptor* RPCRequest_pb2::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return RPCRequest_descriptor_;
+  return RPCRequest_pb2_descriptor_;
 }
 
-const RPCRequest& RPCRequest::default_instance() {
+const RPCRequest_pb2& RPCRequest_pb2::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_RPCMessage_2eproto();
   return *default_instance_;
 }
 
-RPCRequest* RPCRequest::default_instance_ = NULL;
+RPCRequest_pb2* RPCRequest_pb2::default_instance_ = NULL;
 
-RPCRequest* RPCRequest::New() const {
-  return new RPCRequest;
+RPCRequest_pb2* RPCRequest_pb2::New() const {
+  return new RPCRequest_pb2;
 }
 
-void RPCRequest::Clear() {
+void RPCRequest_pb2::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     callid_ = 0;
     if (has_methodname()) {
@@ -205,7 +205,7 @@ void RPCRequest::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool RPCRequest::MergePartialFromCodedStream(
+bool RPCRequest_pb2::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -273,7 +273,7 @@ bool RPCRequest::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void RPCRequest::SerializeWithCachedSizes(
+void RPCRequest_pb2::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // required int32 callid = 1;
   if (has_callid()) {
@@ -301,7 +301,7 @@ void RPCRequest::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* RPCRequest::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* RPCRequest_pb2::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // required int32 callid = 1;
   if (has_callid()) {
@@ -332,7 +332,7 @@ void RPCRequest::SerializeWithCachedSizes(
   return target;
 }
 
-int RPCRequest::ByteSize() const {
+int RPCRequest_pb2::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -369,10 +369,10 @@ int RPCRequest::ByteSize() const {
   return total_size;
 }
 
-void RPCRequest::MergeFrom(const ::google::protobuf::Message& from) {
+void RPCRequest_pb2::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const RPCRequest* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const RPCRequest*>(
+  const RPCRequest_pb2* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const RPCRequest_pb2*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -381,7 +381,7 @@ void RPCRequest::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void RPCRequest::MergeFrom(const RPCRequest& from) {
+void RPCRequest_pb2::MergeFrom(const RPCRequest_pb2& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_callid()) {
@@ -397,25 +397,25 @@ void RPCRequest::MergeFrom(const RPCRequest& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void RPCRequest::CopyFrom(const ::google::protobuf::Message& from) {
+void RPCRequest_pb2::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void RPCRequest::CopyFrom(const RPCRequest& from) {
+void RPCRequest_pb2::CopyFrom(const RPCRequest_pb2& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool RPCRequest::IsInitialized() const {
+bool RPCRequest_pb2::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
 
   return true;
 }
 
-void RPCRequest::Swap(RPCRequest* other) {
+void RPCRequest_pb2::Swap(RPCRequest_pb2* other) {
   if (other != this) {
     std::swap(callid_, other->callid_);
     std::swap(methodname_, other->methodname_);
@@ -426,11 +426,11 @@ void RPCRequest::Swap(RPCRequest* other) {
   }
 }
 
-::google::protobuf::Metadata RPCRequest::GetMetadata() const {
+::google::protobuf::Metadata RPCRequest_pb2::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = RPCRequest_descriptor_;
-  metadata.reflection = RPCRequest_reflection_;
+  metadata.descriptor = RPCRequest_pb2_descriptor_;
+  metadata.reflection = RPCRequest_pb2_reflection_;
   return metadata;
 }
 
@@ -438,36 +438,36 @@ void RPCRequest::Swap(RPCRequest* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int RPCResponse::kCallidFieldNumber;
-const int RPCResponse::kRetvalueFieldNumber;
+const int RPCResponse_pb2::kCallidFieldNumber;
+const int RPCResponse_pb2::kRetvalueFieldNumber;
 #endif  // !_MSC_VER
 
-RPCResponse::RPCResponse()
+RPCResponse_pb2::RPCResponse_pb2()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void RPCResponse::InitAsDefaultInstance() {
+void RPCResponse_pb2::InitAsDefaultInstance() {
 }
 
-RPCResponse::RPCResponse(const RPCResponse& from)
+RPCResponse_pb2::RPCResponse_pb2(const RPCResponse_pb2& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void RPCResponse::SharedCtor() {
+void RPCResponse_pb2::SharedCtor() {
   _cached_size_ = 0;
   callid_ = 0;
   retvalue_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-RPCResponse::~RPCResponse() {
+RPCResponse_pb2::~RPCResponse_pb2() {
   SharedDtor();
 }
 
-void RPCResponse::SharedDtor() {
+void RPCResponse_pb2::SharedDtor() {
   if (retvalue_ != &::google::protobuf::internal::kEmptyString) {
     delete retvalue_;
   }
@@ -475,28 +475,28 @@ void RPCResponse::SharedDtor() {
   }
 }
 
-void RPCResponse::SetCachedSize(int size) const {
+void RPCResponse_pb2::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* RPCResponse::descriptor() {
+const ::google::protobuf::Descriptor* RPCResponse_pb2::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return RPCResponse_descriptor_;
+  return RPCResponse_pb2_descriptor_;
 }
 
-const RPCResponse& RPCResponse::default_instance() {
+const RPCResponse_pb2& RPCResponse_pb2::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_RPCMessage_2eproto();
   return *default_instance_;
 }
 
-RPCResponse* RPCResponse::default_instance_ = NULL;
+RPCResponse_pb2* RPCResponse_pb2::default_instance_ = NULL;
 
-RPCResponse* RPCResponse::New() const {
-  return new RPCResponse;
+RPCResponse_pb2* RPCResponse_pb2::New() const {
+  return new RPCResponse_pb2;
 }
 
-void RPCResponse::Clear() {
+void RPCResponse_pb2::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     callid_ = 0;
     if (has_retvalue()) {
@@ -509,7 +509,7 @@ void RPCResponse::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool RPCResponse::MergePartialFromCodedStream(
+bool RPCResponse_pb2::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -560,7 +560,7 @@ bool RPCResponse::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void RPCResponse::SerializeWithCachedSizes(
+void RPCResponse_pb2::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // required int32 callid = 1;
   if (has_callid()) {
@@ -579,7 +579,7 @@ void RPCResponse::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* RPCResponse::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* RPCResponse_pb2::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // required int32 callid = 1;
   if (has_callid()) {
@@ -600,7 +600,7 @@ void RPCResponse::SerializeWithCachedSizes(
   return target;
 }
 
-int RPCResponse::ByteSize() const {
+int RPCResponse_pb2::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -630,10 +630,10 @@ int RPCResponse::ByteSize() const {
   return total_size;
 }
 
-void RPCResponse::MergeFrom(const ::google::protobuf::Message& from) {
+void RPCResponse_pb2::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const RPCResponse* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const RPCResponse*>(
+  const RPCResponse_pb2* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const RPCResponse_pb2*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -642,7 +642,7 @@ void RPCResponse::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void RPCResponse::MergeFrom(const RPCResponse& from) {
+void RPCResponse_pb2::MergeFrom(const RPCResponse_pb2& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_callid()) {
@@ -655,25 +655,25 @@ void RPCResponse::MergeFrom(const RPCResponse& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void RPCResponse::CopyFrom(const ::google::protobuf::Message& from) {
+void RPCResponse_pb2::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void RPCResponse::CopyFrom(const RPCResponse& from) {
+void RPCResponse_pb2::CopyFrom(const RPCResponse_pb2& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool RPCResponse::IsInitialized() const {
+bool RPCResponse_pb2::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
 
-void RPCResponse::Swap(RPCResponse* other) {
+void RPCResponse_pb2::Swap(RPCResponse_pb2* other) {
   if (other != this) {
     std::swap(callid_, other->callid_);
     std::swap(retvalue_, other->retvalue_);
@@ -683,11 +683,11 @@ void RPCResponse::Swap(RPCResponse* other) {
   }
 }
 
-::google::protobuf::Metadata RPCResponse::GetMetadata() const {
+::google::protobuf::Metadata RPCResponse_pb2::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = RPCResponse_descriptor_;
-  metadata.reflection = RPCResponse_reflection_;
+  metadata.descriptor = RPCResponse_pb2_descriptor_;
+  metadata.reflection = RPCResponse_pb2_reflection_;
   return metadata;
 }
 

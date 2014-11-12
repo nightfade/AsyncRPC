@@ -15,6 +15,8 @@
 
 #import "RPCMessage.pb.h"
 #import "ProtobufCodec.h"
+#import "PBRPCRequest.h"
+#import "PBRPCResponse.h"
 
 
 const size_t kHeaderLength = sizeof(int32_t);
@@ -25,7 +27,7 @@ const size_t kHeaderLength = sizeof(int32_t);
     std::deque<char> _buffer;
 }
 
-- (void)dispatchAndReleaseMessage:(google::protobuf::Message *)message withHandler:(id<RPCServiceDelegate>)handler;
+- (void)dispatchAndReleaseMessage:(google::protobuf::Message *)message;
 
 @end
 
@@ -40,48 +42,15 @@ const size_t kHeaderLength = sizeof(int32_t);
     return self;
 }
 
-- (NSData *)serializeMethod:(NSString *)methodName withParams:(NSDictionary *)params andCallid:(callid_t)callid {
-    if (![NSJSONSerialization isValidJSONObject:params]) {
-        NSLog(@"params is not a valid JSON object!");
-        return nil;
-    }
-    NSError *jsonError;
-    NSData *paramsData = [NSJSONSerialization dataWithJSONObject:params options:0 error:&jsonError];
-    if (paramsData == nil) {
-        NSLog(@"NSJsonSerialization Error: %@", jsonError);
-        return nil;
-    }
-    RPCRequest request;
-    request.set_methodname([methodName UTF8String]);
-    request.set_params([paramsData bytes], [paramsData length]);
-    request.set_callid(callid);
-    
-    std::string serializedData = ProtobufCodec::encode(request);
-    return [NSData dataWithBytes:serializedData.data() length:serializedData.size()];
+- (RPCRequest *)createRequest {
+    return [[PBRPCRequest alloc] init];
 }
 
-
-- (NSData *)serializeCallbackID:(callid_t)callid withReturnValue:(NSDictionary *)retvalue {
-    if (![NSJSONSerialization isValidJSONObject:retvalue]) {
-        NSLog(@"retvalue is not a valid JSON object!");
-        return nil;
-    }
-    NSError *jsonError;
-    NSData *retvalueData = [NSJSONSerialization dataWithJSONObject:retvalue options:0 error:&jsonError];
-    if (retvalueData == nil) {
-        NSLog(@"NSJsonSerialization Error: %@", jsonError);
-        return nil;
-    }
-    RPCResponse response;
-    response.set_callid(callid);
-    response.set_retvalue([retvalueData bytes], [retvalueData length]);
-    
-    std::string serializedData = ProtobufCodec::encode(response);
-    return [NSData dataWithBytes:serializedData.data() length:serializedData.size()];
+- (RPCResponse *)createResponse {
+    return [[PBRPCResponse alloc] init];
 }
 
-
-- (void)handleData:(NSData *)data withService:(id<RPCServiceDelegate>)delegate {
+- (void)appendData:(NSData *)data {
     // 1. copy input data input buffer
     const char *bytes = static_cast<const char*>(data.bytes);
     NSUInteger length = [data length];
@@ -111,53 +80,57 @@ const size_t kHeaderLength = sizeof(int32_t);
         }
         
         // 2.3 dispatch message
-        [self dispatchAndReleaseMessage:message withHandler:delegate];
+        [self dispatchAndReleaseMessage:message];
         
         // 2.4 eat processed data
         _buffer.erase(_buffer.begin(), _buffer.begin() + dataLength);
     }
 }
 
-
-- (void)dispatchAndReleaseMessage:(google::protobuf::Message *)message withHandler:(id<RPCServiceDelegate>)handler {
-    if (message->GetTypeName() == "RPCRequest")
+- (void)dispatchAndReleaseMessage:(google::protobuf::Message *)message {
+    if (message->GetTypeName() == "RPCRequest_pb2")
     {
-        RPCRequest *request = static_cast<RPCRequest *>(message);
+        RPCRequest_pb2 *request_pb = static_cast<RPCRequest_pb2 *>(message);
+        RPCRequest *request = [self createRequest];
         
         // method name
-        NSString *methodName = [NSString stringWithUTF8String:request->methodname().c_str()];
+        request.methodName = [NSString stringWithUTF8String:request_pb->methodname().c_str()];
+        
         // params json object
-        NSData *jsonData = [NSData dataWithBytes:request->params().c_str() length:request->params().size()];
+        NSData *jsonData = [NSData dataWithBytes:request_pb->params().c_str() length:request_pb->params().size()];
         NSError *error;
-        id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
-        if (nil == jsonObject) {
+        request.params = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+        if (nil == request.params) {
             @throw [NSException exceptionWithName:PROTOBUF_INVALID_PARAMS_EXCEPTION
                                            reason:@"Invalid JSON Params!"
                                          userInfo:@{@"Error": error}];
         }
-        // call id
-        callid_t callid = request->callid();
         
-        [handler serveMethod:methodName withParams:jsonObject andCallid:callid];
+        // call id
+        request.callid = request_pb->callid();
+        
+        [self.delegate handleRPCRequest:request];
     }
-    else if (message->GetTypeName() == "RPCResponse")
+    else if (message->GetTypeName() == "RPCResponse_pb2")
     {
-        RPCResponse *response = static_cast<RPCResponse *>(message);
+        RPCResponse_pb2 *response_pb2 = static_cast<RPCResponse_pb2 *>(message);
+        RPCResponse *response = [self createResponse];
         
         // call id
-        callid_t callid = response->callid();
+        response.callid = response_pb2->callid();
+        
         // return value
-        std::string retvalueData = response->retvalue();
+        std::string retvalueData = response_pb2->retvalue();
         NSData *jsonData = [NSData dataWithBytes:retvalueData.c_str() length:retvalueData.size()];
         NSError *error;
-        id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
-        if (nil == jsonObject) {
+        response.returnValue = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+        if (nil == response.returnValue) {
             @throw [NSException exceptionWithName:PROTOBUF_INVALID_PARAMS_EXCEPTION
                                            reason:@"Invalid JSON Params!"
                                          userInfo:@{@"Error": error}];
         }
         
-        [handler callbackWithId:[NSNumber numberWithInt:callid] andReturnValue:jsonObject];
+        [self.delegate handleRPCResponse:response];
     }
     else
     {

@@ -31,19 +31,19 @@ void  protobuf_AddDesc_RPCMessage_2eproto();
 void protobuf_AssignDesc_RPCMessage_2eproto();
 void protobuf_ShutdownFile_RPCMessage_2eproto();
 
-class RPCRequest;
-class RPCResponse;
+class RPCRequest_pb2;
+class RPCResponse_pb2;
 
 // ===================================================================
 
-class RPCRequest : public ::google::protobuf::Message {
+class RPCRequest_pb2 : public ::google::protobuf::Message {
  public:
-  RPCRequest();
-  virtual ~RPCRequest();
+  RPCRequest_pb2();
+  virtual ~RPCRequest_pb2();
 
-  RPCRequest(const RPCRequest& from);
+  RPCRequest_pb2(const RPCRequest_pb2& from);
 
-  inline RPCRequest& operator=(const RPCRequest& from) {
+  inline RPCRequest_pb2& operator=(const RPCRequest_pb2& from) {
     CopyFrom(from);
     return *this;
   }
@@ -57,17 +57,17 @@ class RPCRequest : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const RPCRequest& default_instance();
+  static const RPCRequest_pb2& default_instance();
 
-  void Swap(RPCRequest* other);
+  void Swap(RPCRequest_pb2* other);
 
   // implements Message ----------------------------------------------
 
-  RPCRequest* New() const;
+  RPCRequest_pb2* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const RPCRequest& from);
-  void MergeFrom(const RPCRequest& from);
+  void CopyFrom(const RPCRequest_pb2& from);
+  void MergeFrom(const RPCRequest_pb2& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -121,7 +121,7 @@ class RPCRequest : public ::google::protobuf::Message {
   inline ::std::string* release_params();
   inline void set_allocated_params(::std::string* params);
 
-  // @@protoc_insertion_point(class_scope:RPCRequest)
+  // @@protoc_insertion_point(class_scope:RPCRequest_pb2)
  private:
   inline void set_has_callid();
   inline void clear_has_callid();
@@ -144,18 +144,18 @@ class RPCRequest : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_RPCMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static RPCRequest* default_instance_;
+  static RPCRequest_pb2* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class RPCResponse : public ::google::protobuf::Message {
+class RPCResponse_pb2 : public ::google::protobuf::Message {
  public:
-  RPCResponse();
-  virtual ~RPCResponse();
+  RPCResponse_pb2();
+  virtual ~RPCResponse_pb2();
 
-  RPCResponse(const RPCResponse& from);
+  RPCResponse_pb2(const RPCResponse_pb2& from);
 
-  inline RPCResponse& operator=(const RPCResponse& from) {
+  inline RPCResponse_pb2& operator=(const RPCResponse_pb2& from) {
     CopyFrom(from);
     return *this;
   }
@@ -169,17 +169,17 @@ class RPCResponse : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const RPCResponse& default_instance();
+  static const RPCResponse_pb2& default_instance();
 
-  void Swap(RPCResponse* other);
+  void Swap(RPCResponse_pb2* other);
 
   // implements Message ----------------------------------------------
 
-  RPCResponse* New() const;
+  RPCResponse_pb2* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const RPCResponse& from);
-  void MergeFrom(const RPCResponse& from);
+  void CopyFrom(const RPCResponse_pb2& from);
+  void MergeFrom(const RPCResponse_pb2& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -221,7 +221,7 @@ class RPCResponse : public ::google::protobuf::Message {
   inline ::std::string* release_retvalue();
   inline void set_allocated_retvalue(::std::string* retvalue);
 
-  // @@protoc_insertion_point(class_scope:RPCResponse)
+  // @@protoc_insertion_point(class_scope:RPCResponse_pb2)
  private:
   inline void set_has_callid();
   inline void clear_has_callid();
@@ -241,85 +241,85 @@ class RPCResponse : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_RPCMessage_2eproto();
 
   void InitAsDefaultInstance();
-  static RPCResponse* default_instance_;
+  static RPCResponse_pb2* default_instance_;
 };
 // ===================================================================
 
 
 // ===================================================================
 
-// RPCRequest
+// RPCRequest_pb2
 
 // required int32 callid = 1;
-inline bool RPCRequest::has_callid() const {
+inline bool RPCRequest_pb2::has_callid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RPCRequest::set_has_callid() {
+inline void RPCRequest_pb2::set_has_callid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RPCRequest::clear_has_callid() {
+inline void RPCRequest_pb2::clear_has_callid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RPCRequest::clear_callid() {
+inline void RPCRequest_pb2::clear_callid() {
   callid_ = 0;
   clear_has_callid();
 }
-inline ::google::protobuf::int32 RPCRequest::callid() const {
+inline ::google::protobuf::int32 RPCRequest_pb2::callid() const {
   return callid_;
 }
-inline void RPCRequest::set_callid(::google::protobuf::int32 value) {
+inline void RPCRequest_pb2::set_callid(::google::protobuf::int32 value) {
   set_has_callid();
   callid_ = value;
 }
 
 // required string methodName = 2;
-inline bool RPCRequest::has_methodname() const {
+inline bool RPCRequest_pb2::has_methodname() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void RPCRequest::set_has_methodname() {
+inline void RPCRequest_pb2::set_has_methodname() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void RPCRequest::clear_has_methodname() {
+inline void RPCRequest_pb2::clear_has_methodname() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void RPCRequest::clear_methodname() {
+inline void RPCRequest_pb2::clear_methodname() {
   if (methodname_ != &::google::protobuf::internal::kEmptyString) {
     methodname_->clear();
   }
   clear_has_methodname();
 }
-inline const ::std::string& RPCRequest::methodname() const {
+inline const ::std::string& RPCRequest_pb2::methodname() const {
   return *methodname_;
 }
-inline void RPCRequest::set_methodname(const ::std::string& value) {
+inline void RPCRequest_pb2::set_methodname(const ::std::string& value) {
   set_has_methodname();
   if (methodname_ == &::google::protobuf::internal::kEmptyString) {
     methodname_ = new ::std::string;
   }
   methodname_->assign(value);
 }
-inline void RPCRequest::set_methodname(const char* value) {
+inline void RPCRequest_pb2::set_methodname(const char* value) {
   set_has_methodname();
   if (methodname_ == &::google::protobuf::internal::kEmptyString) {
     methodname_ = new ::std::string;
   }
   methodname_->assign(value);
 }
-inline void RPCRequest::set_methodname(const char* value, size_t size) {
+inline void RPCRequest_pb2::set_methodname(const char* value, size_t size) {
   set_has_methodname();
   if (methodname_ == &::google::protobuf::internal::kEmptyString) {
     methodname_ = new ::std::string;
   }
   methodname_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* RPCRequest::mutable_methodname() {
+inline ::std::string* RPCRequest_pb2::mutable_methodname() {
   set_has_methodname();
   if (methodname_ == &::google::protobuf::internal::kEmptyString) {
     methodname_ = new ::std::string;
   }
   return methodname_;
 }
-inline ::std::string* RPCRequest::release_methodname() {
+inline ::std::string* RPCRequest_pb2::release_methodname() {
   clear_has_methodname();
   if (methodname_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -329,7 +329,7 @@ inline ::std::string* RPCRequest::release_methodname() {
     return temp;
   }
 }
-inline void RPCRequest::set_allocated_methodname(::std::string* methodname) {
+inline void RPCRequest_pb2::set_allocated_methodname(::std::string* methodname) {
   if (methodname_ != &::google::protobuf::internal::kEmptyString) {
     delete methodname_;
   }
@@ -343,53 +343,53 @@ inline void RPCRequest::set_allocated_methodname(::std::string* methodname) {
 }
 
 // required bytes params = 3;
-inline bool RPCRequest::has_params() const {
+inline bool RPCRequest_pb2::has_params() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void RPCRequest::set_has_params() {
+inline void RPCRequest_pb2::set_has_params() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void RPCRequest::clear_has_params() {
+inline void RPCRequest_pb2::clear_has_params() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void RPCRequest::clear_params() {
+inline void RPCRequest_pb2::clear_params() {
   if (params_ != &::google::protobuf::internal::kEmptyString) {
     params_->clear();
   }
   clear_has_params();
 }
-inline const ::std::string& RPCRequest::params() const {
+inline const ::std::string& RPCRequest_pb2::params() const {
   return *params_;
 }
-inline void RPCRequest::set_params(const ::std::string& value) {
+inline void RPCRequest_pb2::set_params(const ::std::string& value) {
   set_has_params();
   if (params_ == &::google::protobuf::internal::kEmptyString) {
     params_ = new ::std::string;
   }
   params_->assign(value);
 }
-inline void RPCRequest::set_params(const char* value) {
+inline void RPCRequest_pb2::set_params(const char* value) {
   set_has_params();
   if (params_ == &::google::protobuf::internal::kEmptyString) {
     params_ = new ::std::string;
   }
   params_->assign(value);
 }
-inline void RPCRequest::set_params(const void* value, size_t size) {
+inline void RPCRequest_pb2::set_params(const void* value, size_t size) {
   set_has_params();
   if (params_ == &::google::protobuf::internal::kEmptyString) {
     params_ = new ::std::string;
   }
   params_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* RPCRequest::mutable_params() {
+inline ::std::string* RPCRequest_pb2::mutable_params() {
   set_has_params();
   if (params_ == &::google::protobuf::internal::kEmptyString) {
     params_ = new ::std::string;
   }
   return params_;
 }
-inline ::std::string* RPCRequest::release_params() {
+inline ::std::string* RPCRequest_pb2::release_params() {
   clear_has_params();
   if (params_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -399,7 +399,7 @@ inline ::std::string* RPCRequest::release_params() {
     return temp;
   }
 }
-inline void RPCRequest::set_allocated_params(::std::string* params) {
+inline void RPCRequest_pb2::set_allocated_params(::std::string* params) {
   if (params_ != &::google::protobuf::internal::kEmptyString) {
     delete params_;
   }
@@ -414,78 +414,78 @@ inline void RPCRequest::set_allocated_params(::std::string* params) {
 
 // -------------------------------------------------------------------
 
-// RPCResponse
+// RPCResponse_pb2
 
 // required int32 callid = 1;
-inline bool RPCResponse::has_callid() const {
+inline bool RPCResponse_pb2::has_callid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void RPCResponse::set_has_callid() {
+inline void RPCResponse_pb2::set_has_callid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void RPCResponse::clear_has_callid() {
+inline void RPCResponse_pb2::clear_has_callid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void RPCResponse::clear_callid() {
+inline void RPCResponse_pb2::clear_callid() {
   callid_ = 0;
   clear_has_callid();
 }
-inline ::google::protobuf::int32 RPCResponse::callid() const {
+inline ::google::protobuf::int32 RPCResponse_pb2::callid() const {
   return callid_;
 }
-inline void RPCResponse::set_callid(::google::protobuf::int32 value) {
+inline void RPCResponse_pb2::set_callid(::google::protobuf::int32 value) {
   set_has_callid();
   callid_ = value;
 }
 
 // required bytes retvalue = 2;
-inline bool RPCResponse::has_retvalue() const {
+inline bool RPCResponse_pb2::has_retvalue() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void RPCResponse::set_has_retvalue() {
+inline void RPCResponse_pb2::set_has_retvalue() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void RPCResponse::clear_has_retvalue() {
+inline void RPCResponse_pb2::clear_has_retvalue() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void RPCResponse::clear_retvalue() {
+inline void RPCResponse_pb2::clear_retvalue() {
   if (retvalue_ != &::google::protobuf::internal::kEmptyString) {
     retvalue_->clear();
   }
   clear_has_retvalue();
 }
-inline const ::std::string& RPCResponse::retvalue() const {
+inline const ::std::string& RPCResponse_pb2::retvalue() const {
   return *retvalue_;
 }
-inline void RPCResponse::set_retvalue(const ::std::string& value) {
+inline void RPCResponse_pb2::set_retvalue(const ::std::string& value) {
   set_has_retvalue();
   if (retvalue_ == &::google::protobuf::internal::kEmptyString) {
     retvalue_ = new ::std::string;
   }
   retvalue_->assign(value);
 }
-inline void RPCResponse::set_retvalue(const char* value) {
+inline void RPCResponse_pb2::set_retvalue(const char* value) {
   set_has_retvalue();
   if (retvalue_ == &::google::protobuf::internal::kEmptyString) {
     retvalue_ = new ::std::string;
   }
   retvalue_->assign(value);
 }
-inline void RPCResponse::set_retvalue(const void* value, size_t size) {
+inline void RPCResponse_pb2::set_retvalue(const void* value, size_t size) {
   set_has_retvalue();
   if (retvalue_ == &::google::protobuf::internal::kEmptyString) {
     retvalue_ = new ::std::string;
   }
   retvalue_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* RPCResponse::mutable_retvalue() {
+inline ::std::string* RPCResponse_pb2::mutable_retvalue() {
   set_has_retvalue();
   if (retvalue_ == &::google::protobuf::internal::kEmptyString) {
     retvalue_ = new ::std::string;
   }
   return retvalue_;
 }
-inline ::std::string* RPCResponse::release_retvalue() {
+inline ::std::string* RPCResponse_pb2::release_retvalue() {
   clear_has_retvalue();
   if (retvalue_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
@@ -495,7 +495,7 @@ inline ::std::string* RPCResponse::release_retvalue() {
     return temp;
   }
 }
-inline void RPCResponse::set_allocated_retvalue(::std::string* retvalue) {
+inline void RPCResponse_pb2::set_allocated_retvalue(::std::string* retvalue) {
   if (retvalue_ != &::google::protobuf::internal::kEmptyString) {
     delete retvalue_;
   }

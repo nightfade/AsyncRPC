@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RPCDelegate.h"
+#import "RPCCodec.h"
 
-#define PROTOBUF_DECODE_EXCEPTION               @"ProtobufDecodeException"
-#define PROTOBUF_INVALID_MESSAGE_TYPE_EXCEPTION @"ProtobufInvalidMessageTypeException"
-#define PROTOBUF_INVALID_PARAMS_EXCEPTION       @"ProtobufInvalidParamsException"
+#define PROTOBUF_DECODE_EXCEPTION               @"PBDecodeException"
+#define PROTOBUF_INVALID_MESSAGE_TYPE_EXCEPTION @"PBInvalidMessageTypeException"
+#define PROTOBUF_INVALID_PARAMS_EXCEPTION       @"PBInvalidParamsException"
 
-@interface ProtobufRPCCodec : NSObject <RPCSerializing>
+@interface ProtobufRPCCodec : RPCCodec
 
 @end
