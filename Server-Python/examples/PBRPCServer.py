@@ -4,23 +4,33 @@ import asyncore
 import sys
 
 from network.tcp_server import TCPServer, TCPConnectionHandlerBase
-from rpc.entity import RPCEntity, RPCService
-from rpc.protobuf_rpc import PBRPCDeserializer, PBRPCSerializer
+from rpc.entity import RPCEntity
+from rpc.base import RPCServiceBase, RPCResponse
+from rpc.protobuf.rpc_codec import PBRPCCodec
+from utility import logger_manager
 
 
-class EchoService(RPCService):
+class EchoService(RPCServiceBase):
 
-    def __init__(self, entity):
+    def __init__(self):
         super(EchoService, self).__init__()
+        self.entity = None
+        self.logger = logger_manager.get_logger(self.__class__.__name__)
+
+    def set_entity(self, entity):
         self.entity = entity
 
-    def serve_method(self, method_name, params, callid):
-        super(EchoService, self).serve_method(method_name, params, callid)
-        self.entity.send_callback(callid, {'status': 'ok'})
-        self.entity.call_method(method_name, params)
+    def handleRequest(self, request):
+        response = RPCResponse()
+        response.callid = request.callid
+        response.retvalue = {'status': 'ok'}
 
-    def callback(self, callid, retvalue):
-        super(EchoService, self).callback(callid, retvalue)
+        def callback(retvalue):
+            self.logger.info('return value: %s', str(retvalue))
+
+        if self.entity:
+            self.entity.call_method(request.method_name, request.params, callback)
+        return response
 
 
 class RPCManager(TCPConnectionHandlerBase):
@@ -31,9 +41,10 @@ class RPCManager(TCPConnectionHandlerBase):
 
     def handle_new_connection(self, conn):
         super(RPCManager, self).handle_new_connection(conn)
-        entity = RPCEntity(PBRPCSerializer(), PBRPCDeserializer())
+        entity = RPCEntity(PBRPCCodec())
         entity.set_connection(conn)
-        entity.service = EchoService(entity)
+        entity.service = EchoService()
+        entity.service.set_entity(entity)
         self.entities[conn.peername] = entity
 
 
