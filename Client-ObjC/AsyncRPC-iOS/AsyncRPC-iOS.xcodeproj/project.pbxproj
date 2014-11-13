@@ -26,9 +26,9 @@
 		BBCEF4201A0CB7C0008E6963 /* AsyncRPC_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCEF41F1A0CB7C0008E6963 /* AsyncRPC_iOSTests.m */; };
 		BBCEF42F1A0D0BCD008E6963 /* TCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCEF42E1A0D0BCD008E6963 /* TCPConnection.m */; };
 		BBE18A7C1A1462B500819908 /* MPRPCRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE18A7B1A1462B500819908 /* MPRPCRequest.m */; };
-		BBE18A7F1A147B4900819908 /* MPTransportCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE18A7E1A147B4900819908 /* MPTransportCodec.m */; };
 		BBE18A821A147B6400819908 /* MPRPCResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE18A811A147B6400819908 /* MPRPCResponse.m */; };
 		BBE18A851A14899800819908 /* MPRPCCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = BBE18A841A14899800819908 /* MPRPCCodec.mm */; };
+		BBE18A881A14B06800819908 /* TransportCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE18A871A14B06800819908 /* TransportCodec.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,12 +82,12 @@
 		BBCEF42E1A0D0BCD008E6963 /* TCPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TCPConnection.m; path = ../AsyncRPC/TCPConnection.m; sourceTree = "<group>"; };
 		BBE18A7A1A1462B500819908 /* MPRPCRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPRPCRequest.h; path = ../AsyncRPC/MsgpackRPC/MPRPCRequest.h; sourceTree = "<group>"; };
 		BBE18A7B1A1462B500819908 /* MPRPCRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPRPCRequest.m; path = ../AsyncRPC/MsgpackRPC/MPRPCRequest.m; sourceTree = "<group>"; };
-		BBE18A7D1A147B4900819908 /* MPTransportCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPTransportCodec.h; path = ../AsyncRPC/MsgpackRPC/MPTransportCodec.h; sourceTree = "<group>"; };
-		BBE18A7E1A147B4900819908 /* MPTransportCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPTransportCodec.m; path = ../AsyncRPC/MsgpackRPC/MPTransportCodec.m; sourceTree = "<group>"; };
 		BBE18A801A147B6400819908 /* MPRPCResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPRPCResponse.h; path = ../AsyncRPC/MsgpackRPC/MPRPCResponse.h; sourceTree = "<group>"; };
 		BBE18A811A147B6400819908 /* MPRPCResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPRPCResponse.m; path = ../AsyncRPC/MsgpackRPC/MPRPCResponse.m; sourceTree = "<group>"; };
 		BBE18A831A14899800819908 /* MPRPCCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPRPCCodec.h; path = ../AsyncRPC/MsgpackRPC/MPRPCCodec.h; sourceTree = "<group>"; };
 		BBE18A841A14899800819908 /* MPRPCCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MPRPCCodec.mm; path = ../AsyncRPC/MsgpackRPC/MPRPCCodec.mm; sourceTree = "<group>"; };
+		BBE18A861A14B06800819908 /* TransportCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransportCodec.h; path = ../AsyncRPC/TransportCodec.h; sourceTree = "<group>"; };
+		BBE18A871A14B06800819908 /* TransportCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransportCodec.m; path = ../AsyncRPC/TransportCodec.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +221,8 @@
 				BB8F3C8F1A126A3900A5266A /* RPCServiceDelegate.h */,
 				BB8F3C921A12D32300A5266A /* RPCCodec.h */,
 				BB8F3C931A12D32300A5266A /* RPCCodec.m */,
+				BBE18A861A14B06800819908 /* TransportCodec.h */,
+				BBE18A871A14B06800819908 /* TransportCodec.m */,
 			);
 			name = AsyncRPC;
 			sourceTree = "<group>";
@@ -230,8 +232,6 @@
 			children = (
 				BBE18A7A1A1462B500819908 /* MPRPCRequest.h */,
 				BBE18A7B1A1462B500819908 /* MPRPCRequest.m */,
-				BBE18A7D1A147B4900819908 /* MPTransportCodec.h */,
-				BBE18A7E1A147B4900819908 /* MPTransportCodec.m */,
 				BBE18A801A147B6400819908 /* MPRPCResponse.h */,
 				BBE18A811A147B6400819908 /* MPRPCResponse.m */,
 				BBE18A831A14899800819908 /* MPRPCCodec.h */,
@@ -388,6 +388,7 @@
 				BBCEF42F1A0D0BCD008E6963 /* TCPConnection.m in Sources */,
 				BB8F3C8D1A1268B800A5266A /* RPCResponse.m in Sources */,
 				BB8F3C841A123BB200A5266A /* ProtobufRPCCodec.mm in Sources */,
+				BBE18A881A14B06800819908 /* TransportCodec.m in Sources */,
 				BB490F3C1A0F615600F05173 /* RPCEntity.m in Sources */,
 				BB8F3C9A1A12DC5800A5266A /* PBRPCResponse.mm in Sources */,
 				BB8F3C971A12DC4600A5266A /* PBRPCRequest.mm in Sources */,
@@ -397,7 +398,6 @@
 				BBE18A7C1A1462B500819908 /* MPRPCRequest.m in Sources */,
 				BBE18A851A14899800819908 /* MPRPCCodec.mm in Sources */,
 				BBE18A821A147B6400819908 /* MPRPCResponse.m in Sources */,
-				BBE18A7F1A147B4900819908 /* MPTransportCodec.m in Sources */,
 				BB8F3C941A12D32300A5266A /* RPCCodec.m in Sources */,
 				BB490F491A10345800F05173 /* RPCMessage.pb.cc in Sources */,
 				BBCEF4061A0CB7C0008E6963 /* main.m in Sources */,

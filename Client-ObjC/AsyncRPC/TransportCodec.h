@@ -1,5 +1,5 @@
 //
-//  MsgpackCodec.h
+//  TransportCodec.h
 //  AsyncRPC-iOS
 //
 //  Created by Meng on 14/11/13.
@@ -8,18 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-#define kTypeName    @"typeName"
-#define kMsgpackData @"msgpackData"
-
-// struct MsgpackTransportFormat __attribute__ ((__packed__))
+// struct TransportFormat __attribute__ ((__packed__))
 // {
 //   int32_t  len;
 //   int32_t  nameLen;
 //   char     typeName[nameLen];
-//   char     msgpackData[len-nameLen-8];
+//   char     packageData[len-nameLen-8];
 // }
 
-@interface MPTransportCodec : NSObject
+#define kTypeName    @"TypeName"
+#define kPackageData @"PackageData"
+
+@interface TransportCodec : NSObject
 
 // output data with length header
 + (NSData *)encodeType:(NSString *)typeName withData:(NSData *)data;
@@ -31,3 +31,4 @@
 + (int32_t)int32FromBytes:(const char *)bytes;
 
 @end
+

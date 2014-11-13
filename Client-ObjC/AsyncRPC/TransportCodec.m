@@ -1,24 +1,16 @@
 //
-//  MsgpackCodec.m
+//  TransportCodec.m
 //  AsyncRPC-iOS
 //
 //  Created by Meng on 14/11/13.
 //  Copyright (c) 2014年 nightfade. All rights reserved.
 //
 
-#import "MPTransportCodec.h"
-
-#include <arpa/inet.h>  // htonl, ntohl
-#include <stdint.h>
-
-#import "MPRPCRequest.h"
-#import "MPRPCResponse.h"
-#import <MPMessagePackReader.h>
-#import <MPMessagePackWriter.h>
+#import "TransportCodec.h"
 
 const int kHeaderLen = sizeof(int32_t);
 
-@implementation MPTransportCodec
+@implementation TransportCodec
 
 + (NSData *)encodeType:(NSString *)typeName withData:(NSData *)data {
     NSMutableData *package = [[NSMutableData alloc] init];
@@ -40,8 +32,8 @@ const int kHeaderLen = sizeof(int32_t);
 + (NSDictionary *)decodeBytes:(const void *)bytes withLength:(int32_t)length {
     int32_t nameLen = [self int32FromBytes:bytes];
     NSString *typeName = [[NSString alloc] initWithBytes:bytes + kHeaderLen length:nameLen encoding:NSUTF8StringEncoding];
-    NSData *msgpackData = [NSData dataWithBytes:bytes + kHeaderLen + nameLen length:length - kHeaderLen - nameLen];
-    return @{kTypeName:typeName, kMsgpackData: msgpackData};
+    NSData *packageData = [NSData dataWithBytes:bytes + kHeaderLen + nameLen length:length - kHeaderLen - nameLen];
+    return @{kTypeName:typeName, kPackageData: packageData};
 }
 
 + (NSDictionary *)decodeData:(NSData *)data {

@@ -9,7 +9,7 @@
 #import "MPRPCCodec.h"
 #import "MPRPCRequest.h"
 #import "MPRPCResponse.h"
-#import "MPTransportCodec.h"
+#import "TransportCodec.h"
 #import <MPMessagePackReader.h>
 
 #import <deque>
@@ -54,7 +54,7 @@ const size_t kHeaderLength = sizeof(int32_t);
             break;
         buf.resize(kHeaderLength);
         std::copy(_buffer.begin(), _buffer.begin() + kHeaderLength, buf.begin());
-        int32_t dataLength = [MPTransportCodec int32FromBytes:buf.c_str()];
+        int32_t dataLength = [TransportCodec int32FromBytes:buf.c_str()];
         if (_buffer.size() < kHeaderLength + dataLength)
             break;
         _buffer.erase(_buffer.begin(), _buffer.begin() + kHeaderLength);
@@ -62,10 +62,10 @@ const size_t kHeaderLength = sizeof(int32_t);
         // 2.2 handle data
         buf.resize(dataLength);
         std::copy(_buffer.begin(), _buffer.begin() + dataLength, buf.begin());
-        NSDictionary *msgpackData = [MPTransportCodec decodeBytes:buf.c_str() withLength:(int32_t)buf.size()];
+        NSDictionary *packageData = [TransportCodec decodeBytes:buf.c_str() withLength:(int32_t)buf.size()];
         
         // 2.3 dispatch message
-        [self dispatchPackage:msgpackData[kMsgpackData] withTypeName:msgpackData[kTypeName]];
+        [self dispatchPackage:packageData[kPackageData] withTypeName:packageData[kTypeName]];
         
         // 2.4 eat processed data
         _buffer.erase(_buffer.begin(), _buffer.begin() + dataLength);

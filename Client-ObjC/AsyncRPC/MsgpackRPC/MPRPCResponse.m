@@ -8,7 +8,7 @@
 
 #import "MPRPCResponse.h"
 #import "RPCDefine.h"
-#import "MPTransportCodec.h"
+#import "TransportCodec.h"
 #import <NSDictionary+MPMessagePack.h>
 
 @implementation MPRPCResponse
@@ -21,7 +21,7 @@
         @"retvalue": self.returnValue
     };
     
-    return [MPTransportCodec encodeType:typeName withData:[dict mp_messagePack]];
+    return [TransportCodec encodeType:typeName withData:[dict mp_messagePack]];
 }
 
 @end

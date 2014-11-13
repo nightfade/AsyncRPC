@@ -8,7 +8,7 @@
 
 #import "MPRPCRequest.h"
 #import "RPCDefine.h"
-#import "MPTransportCodec.h"
+#import "TransportCodec.h"
 #import <NSDictionary+MPMessagePack.h>
 
 @implementation MPRPCRequest
@@ -22,7 +22,7 @@
         @"callid": [NSNumber numberWithInt:self.callid]
     };
     
-    return [MPTransportCodec encodeType:typeName withData:[dict mp_messagePack]];
+    return [TransportCodec encodeType:typeName withData:[dict mp_messagePack]];
 }
 
 @end
