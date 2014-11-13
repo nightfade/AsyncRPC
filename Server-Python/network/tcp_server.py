@@ -2,7 +2,9 @@ __author__ = 'nightfade'
 
 import socket
 import asyncore
+import ssl
 
+from network import ssl_config
 from network.tcp_connection import TCPConnection
 from utility import logger_manager
 
@@ -42,7 +44,13 @@ class TCPServer(asyncore.dispatcher):
             return
 
         self.logger.info('accept client from ' + str(addr))
-        conn = TCPConnection(sock, addr)
+
+        sslsock = ssl.wrap_socket(sock,
+                                  server_side=True,
+                                  certfile=ssl_config.certfile,
+                                  keyfile=ssl_config.keyfile)
+
+        conn = TCPConnection(sslsock, addr)
 
         if self.connection_handler:
             self.connection_handler.handle_new_connection(conn)

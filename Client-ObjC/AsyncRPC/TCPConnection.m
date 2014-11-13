@@ -62,6 +62,13 @@
     [self.socket writeData:data withTimeout:-1 tag:RPC_CHANNEL_WRITE_TAG];
 }
 
+- (void)secureSocket:(GCDAsyncSocket *)sock {
+    NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+    [settings setObject:@YES forKey:(NSString *)kCFStreamSSLAllowsExpiredCertificates];
+    [settings setObject:@YES forKey:(NSString *)kCFStreamSSLAllowsAnyRoot];
+    [settings setObject:@NO forKey:(NSString *)kCFStreamSSLValidatesCertificateChain];
+    [sock startTLS:settings];
+}
 
 #pragma mark GCDAsyncSocketDelegate
 
@@ -70,8 +77,7 @@
  * The host parameter will be an IP address, not a DNS name.
  **/
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port {
-    [self tryRead];
-    [self.delegate connectionOpened:self];
+    [self secureSocket:sock];
 }
 
 
@@ -108,7 +114,8 @@
  * and the socketDidDisconnect:withError: delegate method will be called with the specific SSL error code.
  **/
 - (void)socketDidSecure:(GCDAsyncSocket *)sock {
-    
+    [self tryRead];
+    [self.delegate connectionOpened:self];
 }
 
 
