@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-MPMessagePack.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>607ABDA499B3A30A6B6F5167</key>
+		<key>44517216E6761F8992B44246</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D0F2A04633193F44A4E88CD4</key>
+		<key>5256436B8F334970F5024A63</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D567594C4B6B69DD03220F0A</key>
+		<key>6871005C8F22FC581E3D3E91</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CA4ADE62FCEFE4B1A1357506</key>
 		<dict>
 			<key>primary</key>
 			<true/>

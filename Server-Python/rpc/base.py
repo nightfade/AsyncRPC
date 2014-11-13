@@ -13,6 +13,9 @@ class RPCRequest(object):
     def serialize(self):
         return None
 
+    def typename(self):
+        return 'RPCRequest'
+
 
 class RPCResponse(object):
 
@@ -22,6 +25,9 @@ class RPCResponse(object):
 
     def serialize(self):
         return None
+
+    def typename(self):
+        return 'RPCResponse'
 
 
 class RPCServiceBase(object):

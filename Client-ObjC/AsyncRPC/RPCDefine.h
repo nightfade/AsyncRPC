@@ -11,4 +11,7 @@
 
 typedef int32_t callid_t;
 
+#define RPCREQUEST_TYPENAME  @"RPCRequest"
+#define RPCRESPONSE_TYPENAME @"RPCResponse"
+
 #endif

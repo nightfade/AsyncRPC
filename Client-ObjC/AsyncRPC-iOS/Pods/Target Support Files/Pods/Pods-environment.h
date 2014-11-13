@@ -18,3 +18,9 @@
 #define COCOAPODS_VERSION_MINOR_GoogleProtobuf 5
 #define COCOAPODS_VERSION_PATCH_GoogleProtobuf 0
 
+// MPMessagePack
+#define COCOAPODS_POD_AVAILABLE_MPMessagePack
+#define COCOAPODS_VERSION_MAJOR_MPMessagePack 0
+#define COCOAPODS_VERSION_MINOR_MPMessagePack 1
+#define COCOAPODS_VERSION_PATCH_MPMessagePack 8
+

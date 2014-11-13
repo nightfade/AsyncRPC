@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "RPCEntity.h"
 #import "ProtobufRPCCodec.h"
+#import "MPRPCCodec.h"
 
 #define SERVER_HOST @"127.0.0.1"
 #define SERVER_PORT 65432
@@ -55,7 +56,9 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.rpc = [[RPCEntity alloc] initWithCodec:[[ProtobufRPCCodec alloc] init]];
+    RPCCodec *codec = [[MPRPCCodec alloc] init];
+    // RPCCodec *codec = [[ProtobufRPCCodec alloc] init];
+    self.rpc = [[RPCEntity alloc] initWithCodec:codec];
     self.rpc.delegate = self;
     self.rpc.service = self;
     [self.rpc connectHost:SERVER_HOST andPort:SERVER_PORT withTimeout:CONNECTING_TIMEOUT];
